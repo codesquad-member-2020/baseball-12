@@ -12,6 +12,8 @@
 		78C76C002462AA1F00331C70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C76BFE2462AA1F00331C70 /* Main.storyboard */; };
 		78C76C022462AA2000331C70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78C76C012462AA2000331C70 /* Assets.xcassets */; };
 		78C76C052462AA2000331C70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C76C032462AA2000331C70 /* LaunchScreen.storyboard */; };
+		78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0C2462BA1C00331C70 /* PlayViewController.swift */; };
+		78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		78C76C012462AA2000331C70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78C76C042462AA2000331C70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78C76C062462AA2000331C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78C76C0C2462BA1C00331C70 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
+		78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,40 @@
 		78C76BF72462AA1F00331C70 /* Baseball */ = {
 			isa = PBXGroup;
 			children = (
+				78C76C122462BB2E00331C70 /* Models */,
+				78C76C112462BB2400331C70 /* Views */,
+				78C76C102462BB1A00331C70 /* Controllers */,
+				78C76BFE2462AA1F00331C70 /* Main.storyboard */,
 				78C76BF82462AA1F00331C70 /* AppDelegate.swift */,
 				78C76BFA2462AA1F00331C70 /* SceneDelegate.swift */,
-				78C76BFE2462AA1F00331C70 /* Main.storyboard */,
 				78C76C012462AA2000331C70 /* Assets.xcassets */,
 				78C76C032462AA2000331C70 /* LaunchScreen.storyboard */,
 				78C76C062462AA2000331C70 /* Info.plist */,
 			);
 			path = Baseball;
+			sourceTree = "<group>";
+		};
+		78C76C102462BB1A00331C70 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				78C76C0C2462BA1C00331C70 /* PlayViewController.swift */,
+				78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		78C76C112462BB2400331C70 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		78C76C122462BB2E00331C70 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +166,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				78C76BF92462AA1F00331C70 /* AppDelegate.swift in Sources */,
+				78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */,
 				78C76BFB2462AA1F00331C70 /* SceneDelegate.swift in Sources */,
+				78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
