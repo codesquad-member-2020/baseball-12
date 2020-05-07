@@ -14,6 +14,7 @@
 		78C76C052462AA2000331C70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C76C032462AA2000331C70 /* LaunchScreen.storyboard */; };
 		78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0C2462BA1C00331C70 /* PlayViewController.swift */; };
 		78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */; };
+		78C76C142462D21C00331C70 /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C132462D21C00331C70 /* FieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		78C76C062462AA2000331C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C76C0C2462BA1C00331C70 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
+		78C76C132462D21C00331C70 /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		78C76C112462BB2400331C70 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78C76C132462D21C00331C70 /* FieldView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */,
 				78C76BFB2462AA1F00331C70 /* SceneDelegate.swift in Sources */,
 				78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */,
+				78C76C142462D21C00331C70 /* FieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LW42B33394;
 				INFOPLIST_FILE = Baseball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -330,6 +335,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LW42B33394;
 				INFOPLIST_FILE = Baseball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
