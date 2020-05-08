@@ -13,12 +13,11 @@ public class Batter extends PlayerVO {
 
     private int hitCount;
 
-    @Builder
+    @Builder(builderMethodName = "batterBuilder")
     public Batter(int playerId, String playerName, int battingOrder, int plateAppearance, int hitCount) {
         super(playerId, playerName);
         this.battingOrder = battingOrder;
         this.plateAppearance = plateAppearance;
         this.hitCount = hitCount;
     }
-
 }
