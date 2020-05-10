@@ -24,7 +24,7 @@ public class TeamService {
         this.playerService = playerService;
     }
 
-    public void initializeTeamRecordOfInning(int gameId, int awayTeamId, int homeTeamId, int nextInning, boolean isFirsthalf) {
+    public void initializeTeamRecordOfInning(int gameId, int awayTeamId, int homeTeamId, int nextInning) {
         teamDao.insertTeamRecordOfInning(gameId, awayTeamId, nextInning);
         teamDao.insertTeamRecordOfInning(gameId, homeTeamId, nextInning);
     }

@@ -30,6 +30,7 @@ public class GameService {
         public static int inning;
         public static int strike;
         public static int ball;
+        public static int hit;
         public static int out;
     }
 
@@ -43,8 +44,7 @@ public class GameService {
     public GameProgressDetailDto initializeGame(GameInitializingRequestDto initializingRequestDto) {
         Game game = gameDao.findGameById(initializingRequestDto.getGameId());
         logger.debug("Game >>>>>>>>>>> {}", game);
-        teamService.initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(),
-                                                 game.getHomeTeam(), game.getInning(), game.isFirsthalf());
+        teamService.initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning());
         playerService.initializePlayerRecordOfGame(game.getId(), game.getAwayTeam(), game.getHomeTeam());
         return getGameProgressDetail(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning(), game.isFirsthalf());
     }
@@ -64,7 +64,12 @@ public class GameService {
                                     .defenseTeam(defenseTeam)
                                     .awayuser(awayUser)
                                     .homeUser(homeUser)
-                                    .statusBoard(new StatusBoard(Status.judgement, Status.inning, Status.strike, Status.ball, Status.out))
+                                    .statusBoard(new StatusBoard(Status.judgement, Status.inning, Status.strike, Status.ball, Status.hit, Status.out))
                                     .build();
+    }
+
+    public GameProgressDetailDto tryPitching(GameInitializingRequestDto initializingRequestDto) {
+        Game game = gameDao.findGameById(initializingRequestDto.getGameId());
+
     }
 }

@@ -17,5 +17,7 @@ public class StatusBoard {
 
     private int ball;
 
+    private int hit;
+
     private int out;
 }
