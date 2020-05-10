@@ -9,7 +9,7 @@ public class Pitcher extends PlayerVO {
 
     private int pitchingCount;
 
-    @Builder(builderMethodName = "pitcherBuilder")
+    @Builder
     public Pitcher(int playerId, String playerName, int pitchingCount) {
         super(playerId, playerName);
         this.pitchingCount = pitchingCount;
