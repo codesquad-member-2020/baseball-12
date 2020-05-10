@@ -61,7 +61,7 @@ public class PlayerDao {
 
     public Batter findBatterPlayerByTeamIdWithOrder(int awayTeamId, int currentBattingOrder) {
         String SQL = "SELECT p.id as playerId, p.name as playerName, p.batting_order as battingOrder, " +
-                            "pr.plate_appearance as plateAppearance, pr.hit_count as hitCount " +
+                            "p.batting_average as battingAverage, pr.plate_appearance as plateAppearance, pr.hit_count as hitCount " +
                      "FROM player p LEFT OUTER JOIN player_record pr ON p.id = pr.player " +
                      "WHERE p.team = ? AND p.batting_order = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{awayTeamId, currentBattingOrder},
@@ -69,6 +69,7 @@ public class PlayerDao {
                                       .playerId(rs.getInt("playerId"))
                                       .playerName(rs.getString("playerName"))
                                       .battingOrder(rs.getInt("battingOrder"))
+                                      .battingAverage(rs.getInt("battingAverage"))
                                       .plateAppearance(rs.getInt("plateAppearance"))
                                       .hitCount(rs.getInt("hitCount"))
                                       .build());
