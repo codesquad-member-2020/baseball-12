@@ -10,6 +10,18 @@ import UIKit
 
 class InningCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var inningLabel: UILabel!
+    @IBOutlet weak var inningLabel: InningLabel!
+    
+    static let identifier = "InningCell"
+    
+    func showLabelBackground() {
+        inningLabel.backgroundColor = .white
+        inningLabel.textColor = .systemBlue
+    }
+    
+    func hideLabelBackground() {
+        inningLabel.backgroundColor = .clear
+        inningLabel.textColor = .white
+    }
     
 }

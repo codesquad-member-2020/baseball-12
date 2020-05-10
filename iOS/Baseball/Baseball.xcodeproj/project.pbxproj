@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7862E1A62466D45E00019A42 /* BatterRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862E1A52466D45E00019A42 /* BatterRecordView.swift */; };
+		7862E1A82466D46A00019A42 /* BatterRecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7862E1A72466D46A00019A42 /* BatterRecordView.xib */; };
+		7862E1AA2466F47D00019A42 /* BallJudgmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862E1A92466F47D00019A42 /* BallJudgmentView.swift */; };
+		7862E1AC2466F49400019A42 /* BallJudgmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7862E1AB2466F49400019A42 /* BallJudgmentView.xib */; };
+		7862E1AE2467143B00019A42 /* BadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862E1AD2467143B00019A42 /* BadgeLabel.swift */; };
+		7862E1B02467164100019A42 /* SequenceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862E1AF2467164100019A42 /* SequenceLabel.swift */; };
 		78BEC2152466BFD00016D974 /* InningCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BEC2142466BFD00016D974 /* InningCollectionViewCell.swift */; };
 		78C76BF92462AA1F00331C70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76BF82462AA1F00331C70 /* AppDelegate.swift */; };
 		78C76BFB2462AA1F00331C70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76BFA2462AA1F00331C70 /* SceneDelegate.swift */; };
@@ -16,9 +22,16 @@
 		78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0C2462BA1C00331C70 /* PlayViewController.swift */; };
 		78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */; };
 		78C76C142462D21C00331C70 /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C76C132462D21C00331C70 /* FieldView.swift */; };
+		78F3EE2824672CFF00EA2E74 /* InningLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F3EE2724672CFF00EA2E74 /* InningLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7862E1A52466D45E00019A42 /* BatterRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterRecordView.swift; sourceTree = "<group>"; };
+		7862E1A72466D46A00019A42 /* BatterRecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatterRecordView.xib; sourceTree = "<group>"; };
+		7862E1A92466F47D00019A42 /* BallJudgmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallJudgmentView.swift; sourceTree = "<group>"; };
+		7862E1AB2466F49400019A42 /* BallJudgmentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BallJudgmentView.xib; sourceTree = "<group>"; };
+		7862E1AD2467143B00019A42 /* BadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeLabel.swift; sourceTree = "<group>"; };
+		7862E1AF2467164100019A42 /* SequenceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceLabel.swift; sourceTree = "<group>"; };
 		78BEC2142466BFD00016D974 /* InningCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InningCollectionViewCell.swift; sourceTree = "<group>"; };
 		78C76BF52462AA1F00331C70 /* Baseball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Baseball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C76BF82462AA1F00331C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +43,7 @@
 		78C76C0C2462BA1C00331C70 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		78C76C0E2462BA5F00331C70 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		78C76C132462D21C00331C70 /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
+		78F3EE2724672CFF00EA2E74 /* InningLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InningLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +103,13 @@
 			children = (
 				78C76C132462D21C00331C70 /* FieldView.swift */,
 				78BEC2142466BFD00016D974 /* InningCollectionViewCell.swift */,
+				78F3EE2724672CFF00EA2E74 /* InningLabel.swift */,
+				7862E1A52466D45E00019A42 /* BatterRecordView.swift */,
+				7862E1A72466D46A00019A42 /* BatterRecordView.xib */,
+				7862E1A92466F47D00019A42 /* BallJudgmentView.swift */,
+				7862E1AB2466F49400019A42 /* BallJudgmentView.xib */,
+				7862E1AD2467143B00019A42 /* BadgeLabel.swift */,
+				7862E1AF2467164100019A42 /* SequenceLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,6 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				78C76C052462AA2000331C70 /* LaunchScreen.storyboard in Resources */,
+				7862E1AC2466F49400019A42 /* BallJudgmentView.xib in Resources */,
+				7862E1A82466D46A00019A42 /* BatterRecordView.xib in Resources */,
 				78C76C022462AA2000331C70 /* Assets.xcassets in Resources */,
 				78C76C002462AA1F00331C70 /* Main.storyboard in Resources */,
 			);
@@ -171,12 +194,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F3EE2824672CFF00EA2E74 /* InningLabel.swift in Sources */,
+				7862E1AE2467143B00019A42 /* BadgeLabel.swift in Sources */,
 				78C76BF92462AA1F00331C70 /* AppDelegate.swift in Sources */,
 				78C76C0D2462BA1C00331C70 /* PlayViewController.swift in Sources */,
+				7862E1A62466D45E00019A42 /* BatterRecordView.swift in Sources */,
 				78C76BFB2462AA1F00331C70 /* SceneDelegate.swift in Sources */,
 				78BEC2152466BFD00016D974 /* InningCollectionViewCell.swift in Sources */,
+				7862E1AA2466F47D00019A42 /* BallJudgmentView.swift in Sources */,
 				78C76C0F2462BA5F00331C70 /* ScoreViewController.swift in Sources */,
 				78C76C142462D21C00331C70 /* FieldView.swift in Sources */,
+				7862E1B02467164100019A42 /* SequenceLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +351,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW42B33394;
 				INFOPLIST_FILE = Baseball/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,7 +359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jinie.Baseball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -341,6 +370,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW42B33394;
 				INFOPLIST_FILE = Baseball/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -348,7 +378,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jinie.Baseball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

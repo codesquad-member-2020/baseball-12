@@ -11,13 +11,23 @@ import UIKit
 class PlayViewController: UIViewController {
     
     @IBOutlet weak var inningCollectionView: UICollectionView!
+    @IBOutlet weak var pitcherView: UIView!
+    @IBOutlet weak var batterStackView: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureCollectionView()
+        insertRecord()
+    }
+    
+    private func configureCollectionView() {
         inningCollectionView.dataSource = self
         inningCollectionView.delegate = self
-        inningCollectionView.reloadData()
+    }
+    
+    private func insertRecord() {
+        batterStackView.insertArrangedSubview(BatterRecordView(), at: 0)
     }
 
 }
@@ -29,9 +39,19 @@ extension PlayViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "inningCell", for: indexPath) as! InningCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InningCollectionViewCell.identifier, for: indexPath) as! InningCollectionViewCell
         cell.inningLabel.text = "\(indexPath.item + 1)회"
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! InningCollectionViewCell
+        cell.showLabelBackground()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! InningCollectionViewCell
+        cell.hideLabelBackground()
     }
     
 }
