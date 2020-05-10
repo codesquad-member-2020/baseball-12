@@ -3,6 +3,7 @@ package kr.codesquad.baseball.service;
 import kr.codesquad.baseball.dao.GameDao;
 import kr.codesquad.baseball.dto.GameInitializingRequestDto;
 import kr.codesquad.baseball.dto.GameProgressDetailDto;
+import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
@@ -24,15 +25,6 @@ public class GameService {
     private final PlayerService playerService;
 
     private final UserService userService;
-
-    public static class Status {
-        public static String judgement;
-        public static int inning;
-        public static int strike;
-        public static int ball;
-        public static int hit;
-        public static int out;
-    }
 
     public GameService(GameDao gameDao, TeamService teamService, PlayerService playerService, UserService userService) {
         this.gameDao = gameDao;
@@ -59,17 +51,42 @@ public class GameService {
         DefenseTeam defenseTeam = teamService.findDefenseTeamByIds(gameId, defenseTeamId, inning);
         User awayUser = userService.findAwayUserByGameId(gameId);
         User homeUser = userService.findHomeUserByGameId(gameId);
+        StatusBoard statusBoard = createRecentStatusBoard(gameId, inning, offenseTeam);
         return GameProgressDetailDto.builder()
                                     .offenseTeam(offenseTeam)
                                     .defenseTeam(defenseTeam)
                                     .awayuser(awayUser)
                                     .homeUser(homeUser)
-                                    .statusBoard(new StatusBoard(Status.judgement, Status.inning, Status.strike, Status.ball, Status.hit, Status.out))
+                                    .statusBoard(statusBoard)
                                     .build();
     }
 
-    public GameProgressDetailDto tryPitching(GameInitializingRequestDto initializingRequestDto) {
-        Game game = gameDao.findGameById(initializingRequestDto.getGameId());
+    public StatusBoard createRecentStatusBoard(int gameId, int inning, OffenseTeam offenseTeam) {
+        Batter currentBatter = offenseTeam.getBatter();
+        StatusBoard statusBoard = playerService.findRecentStatusOfInningByGameId(gameId, inning);
+        statusBoard.setTeamId(offenseTeam.getTeamId());
+        statusBoard.setCurrentBattingOrder(currentBatter.getBattingOrder());
+        statusBoard.setScore(offenseTeam.getScore());
+        statusBoard.setOnBases(offenseTeam.getOnBases());
+        return statusBoard;
+    }
 
+    public GameProgressDetailDto tryPitch(GameInitializingRequestDto initializingRequestDto) {
+        Game game = gameDao.findGameById(initializingRequestDto.getGameId());
+        StatusBoard statusBoard = getCurrentStatusBoard(game);
+        pitch(statusBoard);
+        return getGameProgressDetail(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning(), game.isFirsthalf());
+    }
+
+    public StatusBoard getCurrentStatusBoard(Game game) {
+        GameProgressDetailDto currentProgressDetail = getGameProgressDetail(game.getId(), game.getAwayTeam(),
+                                                                            game.getHomeTeam(), game.getInning(),
+                                                                            game.isFirsthalf());
+        return currentProgressDetail.getStatusBoard();
+    }
+
+    public void pitch(StatusBoard statusBoard) {
+        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(statusBoard.getTeamId(), statusBoard.getCurrentBattingOrder());
+        String judgement = statusBoard.createJudgement(batter.getBattingAverage());
     }
 }
