@@ -14,6 +14,10 @@ public class StatusBoard {
 
     private Integer teamId;
 
+    private Integer batterId;
+
+    private Integer pitcherId;
+
     private String judgement;
 
     private int inning;
@@ -31,6 +35,8 @@ public class StatusBoard {
     private int out;
 
     private int currentBattingOrder;
+
+    private int addedHitCount;
 
     private List<BatterSummary> onBases;
 
@@ -72,10 +78,15 @@ public class StatusBoard {
             strike = 0;
             ball = 0;
             hit += 1;
+            addedHitCount += 1;
+            currentBattingOrder += 1;
             arrangeSideEffectOfStatus(HIT);
             break;
         case OUT:
+            strike = 0;
+            ball = 0;
             out += 1;
+            currentBattingOrder += 1;
             arrangeSideEffectOfStatus(OUT);
             break;
         }
@@ -85,6 +96,8 @@ public class StatusBoard {
         if (ball == 4) {
             ball = 0;
             hit += 1;
+            addedHitCount += 1;
+            currentBattingOrder += 1;
             judgement = HIT;
         }
 
@@ -94,6 +107,9 @@ public class StatusBoard {
             strike = 0;
             ball = 0;
             out += 1;
+            currentBattingOrder += 1;
         }
+
+        if (currentBattingOrder > 9) currentBattingOrder = 1;
     }
 }
