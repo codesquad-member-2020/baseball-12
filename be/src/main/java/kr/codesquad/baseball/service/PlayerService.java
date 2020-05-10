@@ -6,6 +6,7 @@ import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.model.BattingRecord;
+import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,8 @@ public class PlayerService {
         return basemanIds.stream().map(playerDao::findBatterSummaryById).collect(Collectors.toList());
     }
 
-    public Batter findBatterPlayerByTeamIdWithOrder(int awayTeamId, int currentBattingOrder) {
-        return playerDao.findBatterPlayerByTeamIdWithOrder(awayTeamId, currentBattingOrder);
+    public Batter findBatterPlayerByTeamIdWithOrder(int teamId, int currentBattingOrder) {
+        return playerDao.findBatterPlayerByTeamIdWithOrder(teamId, currentBattingOrder);
     }
 
     public List<BatterDetail> findAllBattingRecordsOfCurrentInningByIds(int gameId, int teamId, int currentInning) {
@@ -60,5 +61,11 @@ public class PlayerService {
 
     public StatusBoard findRecentStatusOfInningByGameId(int gameId, int inning) {
         return playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning);
+    }
+
+    public void updatePlayerRecords(StatusBoard statusBoard, Game game) {
+        playerDao.updatePlayerRecordOfBatter(statusBoard.getBatterId(), statusBoard.getAddedHitCount(), game.getId());
+        playerDao.updatePlayerRecordOfPitcher(statusBoard.getPitcherId(), game.getId());
+        playerDao.insertBattingRecord(statusBoard, game);
     }
 }

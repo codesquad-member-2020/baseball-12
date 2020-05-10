@@ -4,6 +4,7 @@ import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.model.BattingRecord;
+import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
@@ -59,12 +60,12 @@ public class PlayerDao {
                                              .build()));
     }
 
-    public Batter findBatterPlayerByTeamIdWithOrder(int awayTeamId, int currentBattingOrder) {
+    public Batter findBatterPlayerByTeamIdWithOrder(int teamId, int currentBattingOrder) {
         String SQL = "SELECT p.id as playerId, p.name as playerName, p.batting_order as battingOrder, " +
                             "p.batting_average as battingAverage, pr.plate_appearance as plateAppearance, pr.hit_count as hitCount " +
                      "FROM player p LEFT OUTER JOIN player_record pr ON p.id = pr.player " +
                      "WHERE p.team = ? AND p.batting_order = ?";
-        return jdbcTemplate.queryForObject(SQL, new Object[]{awayTeamId, currentBattingOrder},
+        return jdbcTemplate.queryForObject(SQL, new Object[]{teamId, currentBattingOrder},
                 (rs, rowNum) -> Batter.batterBuilder()
                                       .playerId(rs.getInt("playerId"))
                                       .playerName(rs.getString("playerName"))
@@ -118,5 +119,32 @@ public class PlayerDao {
                                            .hit(rs.getInt("hit_count"))
                                            .out(rs.getInt("out_count"))
                                            .build());
+    }
+
+    public void updatePlayerRecordOfBatter(int batterId, int hitCount, int gameId) {
+        String SQL = "UPDATE player_record SET hit_count = hit_count + ?, plate_appearance = plate_appearance + 1 " +
+                     "WHERE game = ? AND player = ?";
+        jdbcTemplate.update(SQL, hitCount, gameId, batterId);
+    }
+
+    public void updatePlayerRecordOfPitcher(int pitcherId, int gameId) {
+        String SQL = "UPDATE player_record SET pitching_count = pitching_count + 1 " +
+                     "WHERE game = ? AND player = ?";
+        jdbcTemplate.update(SQL, gameId, pitcherId);
+    }
+
+    public void insertBattingRecord(StatusBoard statusBoard, Game game) {
+        String SQL = "INSERT INTO batting_record (game, player, inning, judgement, strike_count, ball_count, hit_count, out_count) " +
+                     "VALUES (:gameId, :playerId, :inning, :judgement, :strike, :ball, :hit, :out)";
+        SqlParameterSource namedParameters = new MapSqlParameterSource()
+                                                .addValue("gameId", game.getId())
+                                                .addValue("playerId", statusBoard.getBatterId())
+                                                .addValue("inning", statusBoard.getInning())
+                                                .addValue("judgement", statusBoard.getJudgement())
+                                                .addValue("strike", statusBoard.getStrike())
+                                                .addValue("ball", statusBoard.getBall())
+                                                .addValue("hit", statusBoard.getHit())
+                                                .addValue("out", statusBoard.getOut());
+        namedParameterJdbcTemplate.update(SQL, namedParameters);
     }
 }

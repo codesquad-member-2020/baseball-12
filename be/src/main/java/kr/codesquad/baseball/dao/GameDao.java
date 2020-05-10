@@ -16,9 +16,9 @@ public class GameDao {
     }
 
     public Game findGameById(Integer gameId) {
-        String sql = "SELECT id, away_team, home_team, away_user, home_user, inning, is_firsthalf " +
+        String SQL = "SELECT id, away_team, home_team, away_user, home_user, inning, is_firsthalf " +
                      "FROM game WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{gameId},
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId},
                 (rs, rowNum) -> Game.builder()
                                     .id(rs.getInt("id"))
                                     .awayTeam(rs.getInt("away_team"))
