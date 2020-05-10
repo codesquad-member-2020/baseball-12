@@ -1,10 +1,11 @@
 package kr.codesquad.baseball.model;
 
-import kr.codesquad.baseball.commonconstant.Judgement;
 import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import lombok.*;
 
 import java.util.List;
+
+import static kr.codesquad.baseball.commonconstant.Judgement.*;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -16,6 +17,8 @@ public class StatusBoard {
     private String judgement;
 
     private int inning;
+
+    private boolean isFirsthalf;
 
     private int score;
 
@@ -31,21 +34,66 @@ public class StatusBoard {
 
     private List<BatterSummary> onBases;
 
-    public StatusBoard(String judgement,int inning, int strike, int ball, int hit, int out) {
+    public StatusBoard(String judgement,int inning, boolean isFirsthalf, int strike, int ball, int hit, int out) {
         this.judgement = judgement;
         this.inning = inning;
+        this.isFirsthalf = isFirsthalf;
         this.strike = strike;
         this.ball = ball;
         this.hit = hit;
         this.out = out;
     }
 
+    public void executePitch(double battingAverage) {
+        String judgement = createJudgement(battingAverage);
+        updateStatus(judgement);
+    }
+
     public String createJudgement(double battingAverage) {
         double seed = Math.random();
-        if (seed < 0.1) judgement = Judgement.OUT;
-        else if (seed < (1 - battingAverage) / 2 - 0.05) judgement = Judgement.STRIKE;
-        else if (seed < ((1 - battingAverage) / 2 - 0.05) * 2) judgement = Judgement.BALL;
-        else judgement = Judgement.HIT;
+        if (seed < 0.1) judgement = OUT;
+        else if (seed < (1 - battingAverage) / 2 - 0.05) judgement = STRIKE;
+        else if (seed < ((1 - battingAverage) / 2 - 0.05) * 2) judgement = BALL;
+        else judgement = HIT;
         return judgement;
+    }
+
+    public void updateStatus(String judgement) {
+        switch (judgement) {
+        case STRIKE:
+            strike += 1;
+            arrangeSideEffectOfStatus(STRIKE);
+            break;
+        case BALL:
+            ball += 1;
+            arrangeSideEffectOfStatus(BALL);
+            break;
+        case HIT:
+            strike = 0;
+            ball = 0;
+            hit += 1;
+            arrangeSideEffectOfStatus(HIT);
+            break;
+        case OUT:
+            out += 1;
+            arrangeSideEffectOfStatus(OUT);
+            break;
+        }
+    }
+
+    public void arrangeSideEffectOfStatus(String judgement) {
+        if (ball == 4) {
+            ball = 0;
+            hit += 1;
+            judgement = HIT;
+        }
+
+        if (judgement.equals(HIT) && hit > 3) score += 1;
+
+        if (strike == 3) {
+            strike = 0;
+            ball = 0;
+            out += 1;
+        }
     }
 }

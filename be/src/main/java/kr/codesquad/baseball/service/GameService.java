@@ -35,7 +35,6 @@ public class GameService {
 
     public GameProgressDetailDto initializeGame(GameInitializingRequestDto initializingRequestDto) {
         Game game = gameDao.findGameById(initializingRequestDto.getGameId());
-        logger.debug("Game >>>>>>>>>>> {}", game);
         teamService.initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning());
         playerService.initializePlayerRecordOfGame(game.getId(), game.getAwayTeam(), game.getHomeTeam());
         return getGameProgressDetail(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning(), game.isFirsthalf());
@@ -87,6 +86,7 @@ public class GameService {
 
     public void pitch(StatusBoard statusBoard) {
         Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(statusBoard.getTeamId(), statusBoard.getCurrentBattingOrder());
-        String judgement = statusBoard.createJudgement(batter.getBattingAverage());
+        statusBoard.executePitch(batter.getBattingAverage());
+        
     }
 }
