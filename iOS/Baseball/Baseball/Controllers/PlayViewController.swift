@@ -13,6 +13,10 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var inningCollectionView: UICollectionView!
     @IBOutlet weak var pitcherView: UIView!
     @IBOutlet weak var batterStackView: UIStackView!
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
