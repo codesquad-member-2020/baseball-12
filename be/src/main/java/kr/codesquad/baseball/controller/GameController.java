@@ -24,11 +24,6 @@ public class GameController {
         this.gameService = gameService;
     }
 
-//    @GetMapping("/matches")
-//    public ResponseEntity<ApiResponse> showAll() {
-//
-//    }
-
     @PostMapping("/matches/start")
     public ResponseEntity<ApiResponse<GameProgressDetailDto>> start(@RequestBody GameInitializingRequestDto initializingRequestDto) {
         GameProgressDetailDto gameProgressDetailDto = gameService.initializeGame(initializingRequestDto);
