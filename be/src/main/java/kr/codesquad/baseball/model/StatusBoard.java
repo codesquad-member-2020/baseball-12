@@ -1,12 +1,13 @@
 package kr.codesquad.baseball.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import kr.codesquad.baseball.dto.playerVO.BatterSummary;
+import lombok.*;
+
+import java.util.List;
 
 @Getter @Setter
 @AllArgsConstructor
+@Builder
 public class StatusBoard {
 
     private String judgement;
@@ -20,4 +21,17 @@ public class StatusBoard {
     private int hit;
 
     private int out;
+
+    private int currentBattingOrder;
+
+    private List<BatterSummary> onBases;
+
+    public StatusBoard(String judgement,int inning, int strike, int ball, int hit, int out) {
+        this.judgement = judgement;
+        this.inning = inning;
+        this.strike = strike;
+        this.ball = ball;
+        this.hit = hit;
+        this.out = out;
+    }
 }
