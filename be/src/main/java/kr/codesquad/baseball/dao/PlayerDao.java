@@ -4,6 +4,7 @@ import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.model.BattingRecord;
+import kr.codesquad.baseball.model.StatusBoard;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -101,5 +102,20 @@ public class PlayerDao {
                                        .playerName(rs.getString("playerName"))
                                        .pitchingCount(rs.getInt("pitchingCount"))
                                        .build()));
+    }
+
+    public StatusBoard findRecentPlayerRecordOfInningByGameId(int gameId, int inning) {
+        String SQL = "SELECT judgement, strike_count, ball_count, hit_count, out_count FROM batting_record " +
+                     "WHERE game = ? AND inning = ? " +
+                     "ORDER BY id DESC LIMIT 1";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, inning},
+                (rs, rowNum) -> StatusBoard.builder()
+                                           .inning(inning)
+                                           .judgement(rs.getString("judgement"))
+                                           .strike(rs.getInt("strike_count"))
+                                           .ball(rs.getInt("ball_count"))
+                                           .hit(rs.getInt("hit_count"))
+                                           .out(rs.getInt("out_count"))
+                                           .build());
     }
 }

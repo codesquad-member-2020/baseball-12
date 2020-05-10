@@ -14,6 +14,8 @@ public class StatusBoard {
 
     private int inning;
 
+    private int score;
+
     private int strike;
 
     private int ball;

@@ -6,6 +6,7 @@ import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.model.BattingRecord;
+import kr.codesquad.baseball.model.StatusBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -50,11 +51,14 @@ public class PlayerService {
                                        .battingOrder(batterSummary.getBattingOrder())
                                        .battings(battings)
                                        .build();
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
     }
 
     public Pitcher findPitcherByIds(int gameId, int teamId) {
         return playerDao.findPitcherByIds(gameId, teamId);
+    }
+
+    public StatusBoard findRecentStatusOfInningByGameId(int gameId, int inning) {
+        return playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning);
     }
 }
