@@ -74,6 +74,16 @@ public class PlayerService {
     public void updatePlayerRecords(StatusBoard statusBoard, Game game) {
         playerDao.updatePlayerRecordOfBatter(statusBoard.getBatterId(), statusBoard.getAddedHitCount(), game.getId());
         playerDao.updatePlayerRecordOfPitcher(statusBoard.getPitcherId(), game.getId());
-        playerDao.insertBattingRecord(statusBoard, game);
+        playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(), statusBoard.getJudgement(),
+                                      statusBoard.getStrike(), statusBoard.getBall(), statusBoard.getHit(),
+                                      statusBoard.getOut(), game.getId());
+    }
+
+    public void updatePlayerRecordsForChange(StatusBoard statusBoard, Game game) {
+        String initializedJudgement = "";
+        int initializedStrike = 0; int initializedBall = 0;
+        int initializedHit = 0;    int initializedOut = 0;
+        playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(),
+                                      initializedJudgement, initializedStrike, initializedBall, initializedHit, initializedOut, game.getId());
     }
 }

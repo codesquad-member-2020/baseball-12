@@ -77,11 +77,12 @@ public class GameService {
     }
 
     public GameProgressDetailDto tryPitch(GameInitializingRequestDto initializingRequestDto) {
-        Game game = gameDao.findGameById(initializingRequestDto.getGameId());
-        StatusBoard currentStatusBoard = getCurrentStatusBoard(game);
+        Game currentGame = gameDao.findGameById(initializingRequestDto.getGameId());
+        StatusBoard currentStatusBoard = getCurrentStatusBoard(currentGame);
         StatusBoard updatedStatusBoard = pitch(currentStatusBoard);
-        updateStatusAfterPitch(updatedStatusBoard, game);
-        return getGameProgressDetail(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning(), game.isFirsthalf());
+        updateStatusAfterPitch(updatedStatusBoard, currentGame);
+        Game updatedGame = gameDao.findGameById(currentGame.getId());
+        return getGameProgressDetail(updatedGame.getId(), updatedGame.getAwayTeam(), updatedGame.getHomeTeam(), updatedGame.getInning(), updatedGame.isFirsthalf());
     }
 
     public StatusBoard getCurrentStatusBoard(Game game) {
