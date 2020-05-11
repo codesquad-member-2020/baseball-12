@@ -133,18 +133,18 @@ public class PlayerDao {
         jdbcTemplate.update(SQL, gameId, pitcherId);
     }
 
-    public void insertBattingRecord(StatusBoard statusBoard, Game game) {
+    public void insertBattingRecord(int batterId, int inning, String judgement, int strike, int ball, int hit, int out, int gameId) {
         String SQL = "INSERT INTO batting_record (game, player, inning, judgement, strike_count, ball_count, hit_count, out_count) " +
                      "VALUES (:gameId, :playerId, :inning, :judgement, :strike, :ball, :hit, :out)";
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                                                .addValue("gameId", game.getId())
-                                                .addValue("playerId", statusBoard.getBatterId())
-                                                .addValue("inning", statusBoard.getInning())
-                                                .addValue("judgement", statusBoard.getJudgement())
-                                                .addValue("strike", statusBoard.getStrike())
-                                                .addValue("ball", statusBoard.getBall())
-                                                .addValue("hit", statusBoard.getHit())
-                                                .addValue("out", statusBoard.getOut());
+                                                .addValue("gameId", gameId)
+                                                .addValue("playerId", batterId)
+                                                .addValue("inning", inning)
+                                                .addValue("judgement", judgement)
+                                                .addValue("strike", strike)
+                                                .addValue("ball", ball)
+                                                .addValue("hit", hit)
+                                                .addValue("out", out);
         namedParameterJdbcTemplate.update(SQL, namedParameters);
     }
 }

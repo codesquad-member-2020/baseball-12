@@ -80,5 +80,6 @@ public class TeamService {
     public void updateTeamRecordToChangeInning(StatusBoard statusBoard, Game game) {
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
         teamDao.updateCurrentGameInformation(statusBoard.getInning() + 1, game.isFirsthalf(), game.getId());
+        initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + 1);
     }
 }

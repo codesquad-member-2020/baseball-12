@@ -107,6 +107,7 @@ public class StatusBoard {
             addedHitCount += 1;
             currentBattingOrder += 1;
             judgement = HIT;
+            this.judgement = HIT;
         }
 
         if (judgement.equals(HIT) && hit > 3) score += 1;
