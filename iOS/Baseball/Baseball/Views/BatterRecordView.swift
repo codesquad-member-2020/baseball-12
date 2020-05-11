@@ -10,6 +10,7 @@ import UIKit
 
 class BatterRecordView: UIView {
     
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var judgmentStackView: UIStackView!
 
     required init?(coder: NSCoder) {
@@ -27,10 +28,9 @@ class BatterRecordView: UIView {
     }
     
     private func configure() {
-        let nib = UINib(nibName: "BatterRecordView", bundle: nil)
-        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
-        view.frame = self.bounds
-        self.addSubview(view)
+        Bundle.main.loadNibNamed("BatterRecordView", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
     }
     
     private func insert() {

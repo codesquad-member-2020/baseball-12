@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BatterRecordView" customModule="Baseball" customModuleProvider="target">
             <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="adp-y1-I5F"/>
                 <outlet property="judgmentStackView" destination="OCg-QQ-1au" id="3gU-UL-wyO"/>
             </connections>
         </placeholder>
