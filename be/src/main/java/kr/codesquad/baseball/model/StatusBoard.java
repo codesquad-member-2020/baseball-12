@@ -116,6 +116,7 @@ public class StatusBoard {
             ball = 0;
             out += 1;
             currentBattingOrder += 1;
+            this.judgement = OUT;
         }
 
         if (currentBattingOrder > 9) currentBattingOrder = 1;
