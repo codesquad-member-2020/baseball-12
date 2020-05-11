@@ -68,14 +68,14 @@ public class TeamDao {
     }
 
     public Integer findCurrentBattingOrderOfInning(int gameId, int teamId, int inning) {
-        String SQL = "SELECT current_batting_order FROM team_record" +
+        String SQL = "SELECT current_batting_order FROM team_record " +
                      "WHERE game = ? AND team = ? AND inning = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId, inning}, Integer.class);
     }
 
     public void updateCurrentGameInformation(int inning, boolean firsthalf, int gameId) {
         String SQL = "UPDATE game SET inning = ?, is_firsthalf = ? " +
-                     "WHERE game = ?";
+                     "WHERE id = ?";
         jdbcTemplate.update(SQL, inning, firsthalf, gameId);
     }
 }

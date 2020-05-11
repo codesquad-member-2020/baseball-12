@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,12 +13,16 @@ import org.springframework.data.annotation.Id;
 public class BattingRecord {
 
     @Id
+    @JsonIgnore
     private Integer id;
 
+    @JsonIgnore
     private Integer game;
 
+    @JsonIgnore
     private Integer player;
 
+    @JsonIgnore
     private int inning;
 
     private String judgement;
@@ -26,6 +31,7 @@ public class BattingRecord {
 
     private int ball;
 
+    @JsonIgnore
     private int out;
 
     public BattingRecord(String judgement, int strike, int ball) {

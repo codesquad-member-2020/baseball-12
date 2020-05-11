@@ -20,5 +20,4 @@ public class GameProgressDetailDto {
     User awayuser;
 
     User homeUser;
-
 }
