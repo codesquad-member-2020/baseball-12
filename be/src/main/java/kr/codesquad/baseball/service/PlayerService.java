@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +41,6 @@ public class PlayerService {
     }
 
     public List<BatterDetail> findAllBattingRecordsOfCurrentInningByIds(int gameId, int teamId, int currentInning) {
-//        List<Integer> playerIds = playerDao.findPlayerIdsByTeamId(teamId);
         List<Integer> recordedPlayerIds = playerDao.findRecordedPlayerIds(gameId, teamId, currentInning);
         return recordedPlayerIds.stream()
                 .map((playerId) -> {
@@ -60,7 +60,15 @@ public class PlayerService {
     }
 
     public StatusBoard findRecentStatusOfInningByGameId(int gameId, int inning) {
-        return playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning);
+        return Optional.ofNullable(playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning))
+                       .orElse(StatusBoard.builder()
+                                          .judgement("")
+                                          .inning(inning)
+                                          .strike(0)
+                                          .ball(0)
+                                          .hit(0)
+                                          .out(0)
+                                          .build());
     }
 
     public void updatePlayerRecords(StatusBoard statusBoard, Game game) {

@@ -63,8 +63,8 @@ public class TeamService {
     }
 
     public int findCurrentBattingOrder(int gameId, int teamId, int inning) {
-        if (inning > 1) teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning - 1);
-        else teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
+        if (inning > 1) return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning - 1);
+        else return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
     }
 
     public void updateTeamRecordOfCurrentInning(StatusBoard statusBoard, Game game) {

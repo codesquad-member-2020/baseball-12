@@ -35,7 +35,7 @@ public class PlayerDao {
     }
 
     public List<Integer> findRecordedPlayerIds(int gameId, int teamId, int currentInning) {
-        String SQL = "SELECT p.id FROM player p INNER JOIN batting_record br ON p.id = br.player " +
+        String SQL = "SELECT DISTINCT p.id FROM player p INNER JOIN batting_record br ON p.id = br.player " +
                      "INNER JOIN player_record pr ON p.id = pr.player " +
                      "WHERE br.game = ? AND p.team = ? AND br.inning = ? AND pr.plate_appearance > 0";
         return jdbcTemplate.queryForList(SQL, new Object[]{gameId, teamId, currentInning}, Integer.class);
@@ -110,7 +110,7 @@ public class PlayerDao {
         String SQL = "SELECT judgement, strike_count, ball_count, hit_count, out_count FROM batting_record " +
                      "WHERE game = ? AND inning = ? " +
                      "ORDER BY id DESC LIMIT 1";
-        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, inning},
+        return DataAccessUtils.singleResult(jdbcTemplate.query(SQL, new Object[]{gameId, inning},
                 (rs, rowNum) -> StatusBoard.builder()
                                            .inning(inning)
                                            .judgement(rs.getString("judgement"))
@@ -118,7 +118,7 @@ public class PlayerDao {
                                            .ball(rs.getInt("ball_count"))
                                            .hit(rs.getInt("hit_count"))
                                            .out(rs.getInt("out_count"))
-                                           .build());
+                                           .build()));
     }
 
     public void updatePlayerRecordOfBatter(int batterId, int hitCount, int gameId) {
