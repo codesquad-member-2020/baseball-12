@@ -45,17 +45,22 @@ extension PlayViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InningCollectionViewCell.identifier, for: indexPath) as! InningCollectionViewCell
         cell.inningLabel.text = "\(indexPath.item + 1)회"
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, selectedIndexPath == indexPath {
+            cell.showLabelBackground()
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! InningCollectionViewCell
-        cell.showLabelBackground()
+        if let cell = collectionView.cellForItem(at: indexPath) as? InningCollectionViewCell {
+            cell.showLabelBackground()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! InningCollectionViewCell
-        cell.hideLabelBackground()
+        if let cell = collectionView.cellForItem(at: indexPath) as? InningCollectionViewCell {
+            cell.hideLabelBackground()
+        }
     }
     
 }

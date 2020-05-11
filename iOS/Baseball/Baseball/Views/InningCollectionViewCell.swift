@@ -24,4 +24,8 @@ class InningCollectionViewCell: UICollectionViewCell {
         inningLabel.textColor = .white
     }
     
+    override func prepareForReuse() {
+        isSelected = false
+        hideLabelBackground()
+    }
 }
