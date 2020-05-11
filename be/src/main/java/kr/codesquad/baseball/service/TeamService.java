@@ -11,6 +11,7 @@ import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
 import kr.codesquad.baseball.model.TeamRecord;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -63,8 +64,9 @@ public class TeamService {
     }
 
     public int findCurrentBattingOrder(int gameId, int teamId, int inning) {
-        if (inning > 1) return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning - 1);
-        else return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
+//        if (inning > 1) return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning - 1);
+//            else
+            return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
     }
 
     public void updateTeamRecordOfCurrentInning(StatusBoard statusBoard, Game game) {
@@ -72,14 +74,21 @@ public class TeamService {
     }
 
     public void updateTeamRecordToChangeOffense(StatusBoard statusBoard, Game game) {
+        int currentBattingOrder;
+        int currentInning = statusBoard.getInning();
         playerService.updatePlayerRecordsForChange(statusBoard, game);
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
-        teamDao.updateCurrentGameInformation(statusBoard.getInning(), !game.isFirsthalf(), game.getId());
+        teamDao.updateCurrentGameInformation(currentInning, !game.isFirsthalf(), game.getId());
+        if (currentInning > 1) currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1);
+        else currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning);
+        teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), statusBoard.getInning(), currentBattingOrder);
     }
 
     public void updateTeamRecordToChangeInning(StatusBoard statusBoard, Game game) {
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
-        teamDao.updateCurrentGameInformation(statusBoard.getInning() + 1, game.isFirsthalf(), game.getId());
+        teamDao.updateCurrentGameInformation(statusBoard.getInning() + 1, !game.isFirsthalf(), game.getId());
         initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + 1);
+        int currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning());
+        teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning() + 1, currentBattingOrder);
     }
 }

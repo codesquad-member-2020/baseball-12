@@ -26,7 +26,6 @@ public class StatusBoard {
 
     private int inning;
 
-    @JsonIgnore
     private boolean firsthalf;
 
     private int score;

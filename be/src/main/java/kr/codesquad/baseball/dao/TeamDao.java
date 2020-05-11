@@ -78,4 +78,10 @@ public class TeamDao {
                      "WHERE id = ?";
         jdbcTemplate.update(SQL, inning, firsthalf, gameId);
     }
+
+    public void updateCurrentBattingOrderOfInning(int gameId, int teamId, int inning, int currentBattingOrder) {
+        String SQL = "UPDATE team_record SET current_batting_order = ? " +
+                     "WHERE game = ? AND team = ? AND inning = ?";
+        jdbcTemplate.update(SQL, new Object[]{currentBattingOrder, gameId, teamId, inning});
+    }
 }
