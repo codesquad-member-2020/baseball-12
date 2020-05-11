@@ -11,6 +11,8 @@ import lombok.*;
 @Builder
 public class GameProgressDetailDto {
 
+    StatusBoard statusBoard;
+
     OffenseTeam offenseTeam;
 
     DefenseTeam defenseTeam;
@@ -19,5 +21,4 @@ public class GameProgressDetailDto {
 
     User homeUser;
 
-    StatusBoard statusBoard;
 }

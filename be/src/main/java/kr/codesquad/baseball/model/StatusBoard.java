@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import lombok.*;
 
@@ -12,17 +13,21 @@ import static kr.codesquad.baseball.commonconstant.Judgement.*;
 @Builder
 public class StatusBoard {
 
+    @JsonIgnore
     private Integer teamId;
 
+    @JsonIgnore
     private Integer batterId;
 
+    @JsonIgnore
     private Integer pitcherId;
 
     private String judgement;
 
     private int inning;
 
-    private boolean isFirsthalf;
+    @JsonIgnore
+    private boolean firsthalf;
 
     private int score;
 
@@ -34,16 +39,19 @@ public class StatusBoard {
 
     private int out;
 
+    @JsonIgnore
     private int currentBattingOrder;
 
+    @JsonIgnore
     private int addedHitCount;
 
+    @JsonIgnore
     private List<BatterSummary> onBases;
 
-    public StatusBoard(String judgement,int inning, boolean isFirsthalf, int strike, int ball, int hit, int out) {
+    public StatusBoard(String judgement, int inning, boolean firsthalf, int strike, int ball, int hit, int out) {
         this.judgement = judgement;
         this.inning = inning;
-        this.isFirsthalf = isFirsthalf;
+        this.firsthalf = firsthalf;
         this.strike = strike;
         this.ball = ball;
         this.hit = hit;
