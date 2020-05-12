@@ -84,4 +84,10 @@ public class TeamDao {
                      "WHERE game = ? AND team = ? AND inning = ?";
         jdbcTemplate.update(SQL, new Object[]{currentBattingOrder, gameId, teamId, inning});
     }
+
+    public Integer findTotalScoreOfTeam(int gameId, int teamId) {
+        String SQL = "SELECT SUM(score) as totalScore FROM team_record " +
+                "WHERE game = ? AND team = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId}, Integer.class);
+    }
 }

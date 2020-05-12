@@ -12,5 +12,7 @@ public class TeamVO {
 
     private String teamName;
 
+    private int totalScore;
+
     private int score;
 }

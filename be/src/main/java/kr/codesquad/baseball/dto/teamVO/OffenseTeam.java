@@ -19,8 +19,8 @@ public class OffenseTeam extends TeamVO {
     private List<BatterDetail> battingRecords;
 
     @Builder
-    public OffenseTeam(int teamId, String teamName, int score, List<BatterSummary> onBases, Batter batter, List<BatterDetail> battingRecords) {
-        super(teamId, teamName, score);
+    public OffenseTeam(int teamId, String teamName, int totalScore, int score, List<BatterSummary> onBases, Batter batter, List<BatterDetail> battingRecords) {
+        super(teamId, teamName, totalScore, score);
         this.onBases = onBases;
         this.batter = batter;
         this.battingRecords = battingRecords;

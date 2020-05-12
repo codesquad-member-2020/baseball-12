@@ -62,7 +62,7 @@ public class GameService {
         return GameProgressDetailDto.builder()
                                     .offenseTeam(offenseTeam)
                                     .defenseTeam(defenseTeam)
-                                    .awayuser(awayUser)
+                                    .awayUser(awayUser)
                                     .homeUser(homeUser)
                                     .statusBoard(statusBoard)
                                     .build();

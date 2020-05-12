@@ -34,6 +34,7 @@ public class TeamService {
 
     public OffenseTeam findOffenseTeamByIds(int gameId, int teamId, int inning) {
         int currentBattingOrder = findCurrentBattingOrder(gameId, teamId, inning);
+        int totalScore = findTotalScoreOfTeam(gameId, teamId);
         TeamRecord offenseTeamRecord = teamDao.findTeamRecordByIds(gameId, teamId, inning);
         String teamName = teamDao.findTeamNameById(teamId);
         List<BatterSummary> onBases = playerService.findBasemanByPlayerIds(offenseTeamRecord.getFirstBaseman(),
@@ -44,6 +45,7 @@ public class TeamService {
         return OffenseTeam.builder()
                           .teamId(teamId)
                           .teamName(teamName)
+                          .totalScore(totalScore)
                           .score(offenseTeamRecord.getScore())
                           .onBases(onBases)
                           .batter(batter)
@@ -51,13 +53,19 @@ public class TeamService {
                           .build();
     }
 
+    public int findTotalScoreOfTeam(int gameId, int teamId) {
+       return teamDao.findTotalScoreOfTeam(gameId, teamId);
+    }
+
     public DefenseTeam findDefenseTeamByIds(int gameId, int teamId, int inning) {
+        int totalScore = teamDao.findTotalScoreOfTeam(gameId, teamId);
         TeamRecord defenseTeamRecord = teamDao.findTeamRecordByIds(gameId, teamId, inning);
         String teamName = teamDao.findTeamNameById(teamId);
         Pitcher pitcher = playerService.findPitcherByIds(gameId, teamId);
         return DefenseTeam.builder()
                           .teamId(teamId)
                           .teamName(teamName)
+                          .totalScore(totalScore)
                           .score(defenseTeamRecord.getScore())
                           .pitcher(pitcher)
                           .build();
