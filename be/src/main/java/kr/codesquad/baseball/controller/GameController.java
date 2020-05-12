@@ -1,6 +1,7 @@
 package kr.codesquad.baseball.controller;
 
 import kr.codesquad.baseball.dto.GameInitializingRequestDto;
+import kr.codesquad.baseball.dto.GamePitchRequestDto;
 import kr.codesquad.baseball.dto.GameProgressDetailDto;
 import kr.codesquad.baseball.response.ApiResponse;
 import kr.codesquad.baseball.service.GameService;
@@ -25,7 +26,7 @@ public class GameController {
     }
 
     @PostMapping("/matches/pitch")
-    public ResponseEntity<ApiResponse<GameProgressDetailDto>> pitch(@RequestBody GameInitializingRequestDto initializingRequestDto) {
-        return new ResponseEntity(ApiResponse.OK(true, gameService.tryPitch(initializingRequestDto)), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<GameProgressDetailDto>> pitch(@RequestBody GamePitchRequestDto gamePitchRequestDto) {
+        return new ResponseEntity(ApiResponse.OK(true, gameService.tryPitch(gamePitchRequestDto)), HttpStatus.OK);
     }
 }

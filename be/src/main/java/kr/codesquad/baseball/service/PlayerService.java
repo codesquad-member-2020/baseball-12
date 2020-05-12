@@ -36,8 +36,8 @@ public class PlayerService {
         return basemanIds.stream().map(playerDao::findBatterSummaryById).collect(Collectors.toList());
     }
 
-    public Batter findBatterPlayerByTeamIdWithOrder(int teamId, int currentBattingOrder) {
-        return playerDao.findBatterPlayerByTeamIdWithOrder(teamId, currentBattingOrder);
+    public Batter findBatterPlayerByTeamIdWithOrder(int gameId, int teamId, int currentBattingOrder) {
+        return playerDao.findBatterPlayerByTeamIdWithOrder(gameId, teamId, currentBattingOrder);
     }
 
     public List<BatterDetail> findAllBattingRecordsOfCurrentInningByIds(int gameId, int teamId, int currentInning) {

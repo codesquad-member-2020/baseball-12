@@ -39,7 +39,7 @@ public class TeamService {
         List<BatterSummary> onBases = playerService.findBasemanByPlayerIds(offenseTeamRecord.getFirstBaseman(),
                                                                            offenseTeamRecord.getSecondBaseman(),
                                                                            offenseTeamRecord.getThirdBaseman());
-        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(teamId, currentBattingOrder);
+        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(gameId, teamId, currentBattingOrder);
         List<BatterDetail> battingRecords = playerService.findAllBattingRecordsOfCurrentInningByIds(gameId, teamId, offenseTeamRecord.getInning());
         return OffenseTeam.builder()
                           .teamId(teamId)
