@@ -24,9 +24,13 @@ const GrobalStyle = createGlobalStyle`
     background-color: transparent;
     border: none;
     outline: none;
+    font: inherit;
   }
   ol, ul, li {
     list-style: none;
+  }
+  button {
+    cursor: pointer;
   }
   img {
     display: block;
