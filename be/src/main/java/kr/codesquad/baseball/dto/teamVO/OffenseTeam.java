@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.dto.teamVO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.BatterDetail;
 import kr.codesquad.baseball.dto.playerVO.Batter;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter @Setter
 public class OffenseTeam extends TeamVO {
 
+    @JsonIgnore
     private List<BatterSummary> onBases;
 
     private Batter batter;

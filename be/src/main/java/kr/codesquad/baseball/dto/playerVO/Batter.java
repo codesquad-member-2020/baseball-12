@@ -9,7 +9,7 @@ public class Batter extends PlayerVO {
 
     private int battingOrder;
 
-    private int battingAverage;
+    private double battingAverage;
 
     private int plateAppearance;
 

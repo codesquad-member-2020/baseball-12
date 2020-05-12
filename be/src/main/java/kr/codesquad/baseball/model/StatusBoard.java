@@ -28,12 +28,14 @@ public class StatusBoard {
 
     private boolean firsthalf;
 
+    @JsonIgnore
     private int score;
 
     private int strike;
 
     private int ball;
 
+    @JsonIgnore
     private int hit;
 
     private int out;
