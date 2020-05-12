@@ -1,14 +1,21 @@
 package kr.codesquad.baseball.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+@AllArgsConstructor
 public class StatusBoard {
 
-    public static String judgement;
+    private String judgement;
 
-    public static int inning;
+    private int inning;
 
-    public static int strike;
+    private int strike;
 
-    public static int ball;
+    private int ball;
 
-    public static int out;
+    private int out;
 }
