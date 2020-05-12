@@ -1,20 +1,16 @@
 import React, { useState, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/Login';
-import TeamSelect from './components/TeamSelect';
-import Match from './components/Match';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import GrobalStyle from './styles/globalStyles';
 import theme from './styles/theme';
+import SwitchRoute from './components/SwitchRoute';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GrobalStyle />
       <Router>
-        <Route path="/" exact={true} component={Login} />
-        <Route path="/team" component={TeamSelect} />
-        <Route path="/match" component={Match} />
+        <SwitchRoute />
       </Router>
     </ThemeProvider>
   );
