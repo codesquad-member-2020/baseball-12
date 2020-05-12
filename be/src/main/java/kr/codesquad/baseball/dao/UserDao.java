@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class UserDao {
@@ -34,5 +35,14 @@ public class UserDao {
                 (rs, rowNum) -> new User(rs.getInt("userId"),
                         rs.getString("userName"),
                         rs.getString("userEmail"))));
+    }
+
+    public User findUserById(int userId) {
+        String SQL = "SELECT id, name, email FROM user " +
+                     "WHERE id = ?";
+        return DataAccessUtils.singleResult(jdbcTemplate.query(SQL, new Object[]{userId},
+                                            (rs, rowNum) -> new User(rs.getInt("id"),
+                                                                     rs.getString("name"),
+                                                                     rs.getString("email"))));
     }
 }

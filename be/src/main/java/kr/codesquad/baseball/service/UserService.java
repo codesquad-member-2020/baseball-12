@@ -20,4 +20,8 @@ public class UserService {
     public User findHomeUserByGameId(int gameId) {
         return userDao.findHomeUserByGameId(gameId);
     }
+
+    public User findUserById(int userId) {
+        return userDao.findUserById(userId);
+    }
 }
