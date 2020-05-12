@@ -9,5 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor @NoArgsConstructor
 public class GameInitializingRequestDto {
 
-    private Integer gameId;
+    private Integer matchId;
 }
