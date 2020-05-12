@@ -36,8 +36,8 @@ public class PlayerService {
         return basemanIds.stream().map(playerDao::findBatterSummaryById).collect(Collectors.toList());
     }
 
-    public Batter findBatterPlayerByTeamIdWithOrder(int teamId, int currentBattingOrder) {
-        return playerDao.findBatterPlayerByTeamIdWithOrder(teamId, currentBattingOrder);
+    public Batter findBatterPlayerByTeamIdWithOrder(int gameId, int teamId, int currentBattingOrder) {
+        return playerDao.findBatterPlayerByTeamIdWithOrder(gameId, teamId, currentBattingOrder);
     }
 
     public List<BatterDetail> findAllBattingRecordsOfCurrentInningByIds(int gameId, int teamId, int currentInning) {
@@ -85,5 +85,9 @@ public class PlayerService {
         int initializedHit = 0;    int initializedOut = 0;
         playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(),
                                       initializedJudgement, initializedStrike, initializedBall, initializedHit, initializedOut, game.getId());
+    }
+
+    public double findBattingAverage(int teamId, int currentBattingOrder) {
+        return playerDao.findBattingAverage(teamId, currentBattingOrder);
     }
 }

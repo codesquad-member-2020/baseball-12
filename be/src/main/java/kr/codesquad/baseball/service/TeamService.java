@@ -34,16 +34,20 @@ public class TeamService {
 
     public OffenseTeam findOffenseTeamByIds(int gameId, int teamId, int inning) {
         int currentBattingOrder = findCurrentBattingOrder(gameId, teamId, inning);
+        int totalScore = findTotalScoreOfTeam(gameId, teamId);
+        double battingAverage = playerService.findBattingAverage(teamId, currentBattingOrder);
         TeamRecord offenseTeamRecord = teamDao.findTeamRecordByIds(gameId, teamId, inning);
         String teamName = teamDao.findTeamNameById(teamId);
         List<BatterSummary> onBases = playerService.findBasemanByPlayerIds(offenseTeamRecord.getFirstBaseman(),
                                                                            offenseTeamRecord.getSecondBaseman(),
                                                                            offenseTeamRecord.getThirdBaseman());
-        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(teamId, currentBattingOrder);
+        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(gameId, teamId, currentBattingOrder);
+        batter.setBattingAverage(battingAverage);
         List<BatterDetail> battingRecords = playerService.findAllBattingRecordsOfCurrentInningByIds(gameId, teamId, offenseTeamRecord.getInning());
         return OffenseTeam.builder()
                           .teamId(teamId)
                           .teamName(teamName)
+                          .totalScore(totalScore)
                           .score(offenseTeamRecord.getScore())
                           .onBases(onBases)
                           .batter(batter)
@@ -51,13 +55,19 @@ public class TeamService {
                           .build();
     }
 
+    public int findTotalScoreOfTeam(int gameId, int teamId) {
+       return teamDao.findTotalScoreOfTeam(gameId, teamId);
+    }
+
     public DefenseTeam findDefenseTeamByIds(int gameId, int teamId, int inning) {
+        int totalScore = teamDao.findTotalScoreOfTeam(gameId, teamId);
         TeamRecord defenseTeamRecord = teamDao.findTeamRecordByIds(gameId, teamId, inning);
         String teamName = teamDao.findTeamNameById(teamId);
         Pitcher pitcher = playerService.findPitcherByIds(gameId, teamId);
         return DefenseTeam.builder()
                           .teamId(teamId)
                           .teamName(teamName)
+                          .totalScore(totalScore)
                           .score(defenseTeamRecord.getScore())
                           .pitcher(pitcher)
                           .build();

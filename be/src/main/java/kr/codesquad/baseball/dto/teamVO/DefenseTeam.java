@@ -11,8 +11,8 @@ public class DefenseTeam extends TeamVO {
     private Pitcher pitcher;
 
     @Builder
-    public DefenseTeam(int teamId, String teamName, int score, Pitcher pitcher) {
-        super(teamId, teamName, score);
+    public DefenseTeam(int teamId, String teamName, int totalScore, int score, Pitcher pitcher) {
+        super(teamId, teamName, totalScore, score);
         this.pitcher = pitcher;
     }
 }

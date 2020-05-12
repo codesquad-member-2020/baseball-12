@@ -17,7 +17,7 @@ public class GameProgressDetailDto {
 
     DefenseTeam defenseTeam;
 
-    User awayuser;
+    User awayUser;
 
     User homeUser;
 }

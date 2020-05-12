@@ -2,6 +2,7 @@ package kr.codesquad.baseball.service;
 
 import kr.codesquad.baseball.dao.GameDao;
 import kr.codesquad.baseball.dto.GameInitializingRequestDto;
+import kr.codesquad.baseball.dto.GamePitchRequestDto;
 import kr.codesquad.baseball.dto.GameProgressDetailDto;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
@@ -35,10 +36,16 @@ public class GameService {
     }
 
     public GameProgressDetailDto initializeGame(GameInitializingRequestDto initializingRequestDto) {
-        Game game = gameDao.findGameById(initializingRequestDto.getGameId());
-        teamService.initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning());
-        playerService.initializePlayerRecordOfGame(game.getId(), game.getAwayTeam(), game.getHomeTeam());
-        return getGameProgressDetail(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning(), game.isFirsthalf());
+        Game generatedGame = insertNewGame(initializingRequestDto.getMatchId());
+        teamService.initializeTeamRecordOfInning(generatedGame.getId(), generatedGame.getAwayTeam(), generatedGame.getHomeTeam(), generatedGame.getInning());
+        playerService.initializePlayerRecordOfGame(generatedGame.getId(), generatedGame.getAwayTeam(), generatedGame.getHomeTeam());
+        return getGameProgressDetail(generatedGame.getId(), generatedGame.getAwayTeam(), generatedGame.getHomeTeam(), generatedGame.getInning(), generatedGame.isFirsthalf());
+    }
+
+    public Game insertNewGame(int matchId) {
+        Game matchType = gameDao.findMatchTypeById(matchId);
+        int initializedGameId = gameDao.insertNewGame(matchType);
+        return gameDao.findGameById(initializedGameId);
     }
 
     public GameProgressDetailDto getGameProgressDetail(int gameId, int awayTeamId, int homeTeamId, int inning, boolean isFirsthalf) {
@@ -55,7 +62,7 @@ public class GameService {
         return GameProgressDetailDto.builder()
                                     .offenseTeam(offenseTeam)
                                     .defenseTeam(defenseTeam)
-                                    .awayuser(awayUser)
+                                    .awayUser(awayUser)
                                     .homeUser(homeUser)
                                     .statusBoard(statusBoard)
                                     .build();
@@ -76,10 +83,10 @@ public class GameService {
         return statusBoard;
     }
 
-    public GameProgressDetailDto tryPitch(GameInitializingRequestDto initializingRequestDto) {
-        Game currentGame = gameDao.findGameById(initializingRequestDto.getGameId());
+    public GameProgressDetailDto tryPitch(GamePitchRequestDto gamePitchRequestDto) {
+        Game currentGame = gameDao.findGameById(gamePitchRequestDto.getGameId());
         StatusBoard currentStatusBoard = getCurrentStatusBoard(currentGame);
-        StatusBoard updatedStatusBoard = pitch(currentStatusBoard);
+        StatusBoard updatedStatusBoard = pitch(gamePitchRequestDto.getGameId(), currentStatusBoard);
         updateStatusAfterPitch(updatedStatusBoard, currentGame);
         Game updatedGame = gameDao.findGameById(currentGame.getId());
         return getGameProgressDetail(updatedGame.getId(), updatedGame.getAwayTeam(), updatedGame.getHomeTeam(), updatedGame.getInning(), updatedGame.isFirsthalf());
@@ -92,8 +99,8 @@ public class GameService {
         return currentProgressDetail.getStatusBoard();
     }
 
-    public StatusBoard pitch(StatusBoard statusBoard) {
-        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(statusBoard.getTeamId(), statusBoard.getCurrentBattingOrder());
+    public StatusBoard pitch(int gameId, StatusBoard statusBoard) {
+        Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(gameId, statusBoard.getTeamId(), statusBoard.getCurrentBattingOrder());
         statusBoard.executePitch(batter.getBattingAverage());
         return statusBoard;
     }
