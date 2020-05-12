@@ -13,9 +13,11 @@ import java.util.List;
 public class Team {
 
     @Id
+    @JsonProperty("teamId")
     private Integer id;
 
     private String name;
 
+    @JsonIgnore
     private int score;
 }
