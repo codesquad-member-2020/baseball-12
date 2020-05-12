@@ -1,5 +1,7 @@
 package kr.codesquad.baseball.dao;
 
+import kr.codesquad.baseball.model.Game;
+import kr.codesquad.baseball.model.StatusBoard;
 import kr.codesquad.baseball.model.TeamRecord;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -41,15 +43,45 @@ public class TeamDao {
                      "FROM team_record WHERE game = ? AND team = ? AND inning = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId, inning},
                 (rs, rowNum) -> TeamRecord.builder()
-                        .id(rs.getInt("id"))
-                        .gameId(rs.getInt("game"))
-                        .teamId(rs.getInt("team"))
-                        .inning(rs.getInt("inning"))
-                        .score(rs.getInt("score"))
-                        .currentBattingOrder(rs.getInt("current_batting_order"))
-                        .firstBaseman(rs.getInt("first_baseman"))
-                        .secondBaseman(rs.getInt("second_baseman"))
-                        .thirdBaseman(rs.getInt("third_baseman"))
-                        .build());
+                                          .id(rs.getInt("id"))
+                                          .gameId(rs.getInt("game"))
+                                          .teamId(rs.getInt("team"))
+                                          .inning(rs.getInt("inning"))
+                                          .score(rs.getInt("score"))
+                                          .currentBattingOrder(rs.getInt("current_batting_order"))
+                                          .firstBaseman(rs.getInt("first_baseman"))
+                                          .secondBaseman(rs.getInt("second_baseman"))
+                                          .thirdBaseman(rs.getInt("third_baseman"))
+                                          .build());
+    }
+
+    public void updateTeamRecordOfCurrentInning(StatusBoard statusBoard, Game game) {
+        String SQL = "UPDATE team_record SET score = :score, current_batting_order = :currentBattingOrder " +
+                     "WHERE team = :teamId AND game = :gameId AND inning = :inning";
+        SqlParameterSource namedParameters = new MapSqlParameterSource()
+                                            .addValue("score", statusBoard.getScore())
+                                            .addValue("currentBattingOrder", statusBoard.getCurrentBattingOrder())
+                                            .addValue("teamId", statusBoard.getTeamId())
+                                            .addValue("gameId", game.getId())
+                                            .addValue("inning", statusBoard.getInning());
+        namedParameterJdbcTemplate.update(SQL, namedParameters);
+    }
+
+    public Integer findCurrentBattingOrderOfInning(int gameId, int teamId, int inning) {
+        String SQL = "SELECT current_batting_order FROM team_record " +
+                     "WHERE game = ? AND team = ? AND inning = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId, inning}, Integer.class);
+    }
+
+    public void updateCurrentGameInformation(int inning, boolean firsthalf, int gameId) {
+        String SQL = "UPDATE game SET inning = ?, is_firsthalf = ? " +
+                     "WHERE id = ?";
+        jdbcTemplate.update(SQL, inning, firsthalf, gameId);
+    }
+
+    public void updateCurrentBattingOrderOfInning(int gameId, int teamId, int inning, int currentBattingOrder) {
+        String SQL = "UPDATE team_record SET current_batting_order = ? " +
+                     "WHERE game = ? AND team = ? AND inning = ?";
+        jdbcTemplate.update(SQL, new Object[]{currentBattingOrder, gameId, teamId, inning});
     }
 }
