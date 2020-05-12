@@ -2,6 +2,7 @@ package kr.codesquad.baseball.dao;
 
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
+import kr.codesquad.baseball.model.Team;
 import kr.codesquad.baseball.model.TeamRecord;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -89,5 +90,15 @@ public class TeamDao {
         String SQL = "SELECT SUM(score) as totalScore FROM team_record " +
                 "WHERE game = ? AND team = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId}, Integer.class);
+    }
+
+    public Team findTeamById(int teamId) {
+        String SQL = "SELECT id, name FROM team " +
+                     "WHERE id = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{teamId},
+                (rs, rowNum) -> Team.builder()
+                                    .id(rs.getInt("id"))
+                                    .name(rs.getString("name"))
+                                    .build());
     }
 }

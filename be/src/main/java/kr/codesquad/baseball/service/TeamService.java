@@ -9,6 +9,7 @@ import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
+import kr.codesquad.baseball.model.Team;
 import kr.codesquad.baseball.model.TeamRecord;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,5 +101,9 @@ public class TeamService {
         initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + 1);
         int currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning());
         teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning() + 1, currentBattingOrder);
+    }
+
+    public Team findTeamById(int teamId) {
+        return teamDao.findTeamById(teamId);
     }
 }
