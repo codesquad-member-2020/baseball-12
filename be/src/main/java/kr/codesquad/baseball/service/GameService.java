@@ -82,6 +82,7 @@ public class GameService {
         User homeUser = userService.findHomeUserByGameId(gameId);
         StatusBoard statusBoard = createRecentStatusBoard(gameId, inning, offenseTeam, defenseTeam);
         return GameProgressDetailDto.builder()
+                                    .gameId(gameId)
                                     .offenseTeam(offenseTeam)
                                     .defenseTeam(defenseTeam)
                                     .awayUser(awayUser)

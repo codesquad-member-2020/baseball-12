@@ -11,6 +11,8 @@ import lombok.*;
 @Builder
 public class GameProgressDetailDto {
 
+    int gameId;
+
     StatusBoard statusBoard;
 
     OffenseTeam offenseTeam;
