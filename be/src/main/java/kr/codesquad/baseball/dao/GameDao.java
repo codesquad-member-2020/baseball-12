@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class GameDao {
@@ -64,5 +65,21 @@ public class GameDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         Integer generatedGameId = namedParameterJdbcTemplate.update(SQL, namedParameters, keyHolder, new String[]{"generatedGameId"});
         return keyHolder.getKey().intValue();
+    }
+
+    public List<Integer> findAllGameIds() {
+        String SQL = "SELECT id FROM matches";
+        return jdbcTemplate.queryForList(SQL, Integer.class);
+    }
+
+    public List<Game> findAllMatches() {
+        String SQL = "SELECT id, away_team, home_team, away_user, home_user FROM matches";
+        return jdbcTemplate.query(SQL, (rs, rowNum) -> Game.builder()
+                .id(rs.getInt("id"))
+                .awayTeam(rs.getInt("away_team"))
+                .homeTeam(rs.getInt("home_team"))
+                .awayUser(rs.getInt("away_user"))
+                .homeUser(rs.getInt("home_user"))
+                .build());
     }
 }

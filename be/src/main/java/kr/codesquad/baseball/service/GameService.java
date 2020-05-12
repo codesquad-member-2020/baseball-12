@@ -2,6 +2,7 @@ package kr.codesquad.baseball.service;
 
 import kr.codesquad.baseball.dao.GameDao;
 import kr.codesquad.baseball.dto.GameInitializingRequestDto;
+import kr.codesquad.baseball.dto.MatchListDto;
 import kr.codesquad.baseball.dto.GamePitchRequestDto;
 import kr.codesquad.baseball.dto.GameProgressDetailDto;
 import kr.codesquad.baseball.dto.playerVO.Batter;
@@ -10,10 +11,14 @@ import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
+import kr.codesquad.baseball.model.Team;
 import kr.codesquad.baseball.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -33,6 +38,22 @@ public class GameService {
         this.teamService = teamService;
         this.playerService = playerService;
         this.userService = userService;
+    }
+
+    public List<MatchListDto> findAllTypeOfMatches() {
+        List<Game> allTypeOfMatches = gameDao.findAllMatches();
+        return allTypeOfMatches.stream().map(game -> {
+                Team awayTeam = teamService.findTeamById(game.getAwayTeam());
+                Team homeTeam = teamService.findTeamById(game.getHomeTeam());
+                User awayUser = userService.findUserById(game.getAwayUser());
+                User homeUser = userService.findUserById(game.getHomeUser());
+                return MatchListDto.builder()
+                                   .awayTeam(awayTeam)
+                                   .homeTeam(homeTeam)
+                                   .awayUser(awayUser)
+                                   .homeUser(homeUser)
+                                   .build();
+        }).collect(Collectors.toList());
     }
 
     public GameProgressDetailDto initializeGame(GameInitializingRequestDto initializingRequestDto) {
