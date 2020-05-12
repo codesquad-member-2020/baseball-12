@@ -42,12 +42,13 @@ public class GameService {
 
     public List<MatchListDto> findAllTypeOfMatches() {
         List<Game> allTypeOfMatches = gameDao.findAllMatches();
-        return allTypeOfMatches.stream().map(game -> {
-                Team awayTeam = teamService.findTeamById(game.getAwayTeam());
-                Team homeTeam = teamService.findTeamById(game.getHomeTeam());
-                User awayUser = userService.findUserById(game.getAwayUser());
-                User homeUser = userService.findUserById(game.getHomeUser());
+        return allTypeOfMatches.stream().map(match -> {
+                Team awayTeam = teamService.findTeamById(match.getAwayTeam());
+                Team homeTeam = teamService.findTeamById(match.getHomeTeam());
+                User awayUser = userService.findUserById(match.getAwayUser());
+                User homeUser = userService.findUserById(match.getHomeUser());
                 return MatchListDto.builder()
+                                   .matchId(match.getId())
                                    .awayTeam(awayTeam)
                                    .homeTeam(homeTeam)
                                    .awayUser(awayUser)

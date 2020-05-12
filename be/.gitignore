@@ -165,3 +165,6 @@ gradle-app.setting
 # Database sql
 data.sql
 schema.sql
+
+# Secret Properties
+application-secret.properties
