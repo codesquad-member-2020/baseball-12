@@ -86,4 +86,8 @@ public class PlayerService {
         playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(),
                                       initializedJudgement, initializedStrike, initializedBall, initializedHit, initializedOut, game.getId());
     }
+
+    public double findBattingAverage(int teamId, int currentBattingOrder) {
+        return playerDao.findBattingAverage(teamId, currentBattingOrder);
+    }
 }

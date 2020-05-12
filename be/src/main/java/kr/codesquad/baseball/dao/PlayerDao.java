@@ -147,4 +147,9 @@ public class PlayerDao {
                                                 .addValue("out", out);
         namedParameterJdbcTemplate.update(SQL, namedParameters);
     }
+
+    public Double findBattingAverage(int teamId, int currentBattingOrder) {
+        String SQL = "SELECT batting_average FROM player WHERE team = ? AND batting_order = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{teamId, currentBattingOrder}, Double.class);
+    }
 }

@@ -35,12 +35,14 @@ public class TeamService {
     public OffenseTeam findOffenseTeamByIds(int gameId, int teamId, int inning) {
         int currentBattingOrder = findCurrentBattingOrder(gameId, teamId, inning);
         int totalScore = findTotalScoreOfTeam(gameId, teamId);
+        double battingAverage = playerService.findBattingAverage(teamId, currentBattingOrder);
         TeamRecord offenseTeamRecord = teamDao.findTeamRecordByIds(gameId, teamId, inning);
         String teamName = teamDao.findTeamNameById(teamId);
         List<BatterSummary> onBases = playerService.findBasemanByPlayerIds(offenseTeamRecord.getFirstBaseman(),
                                                                            offenseTeamRecord.getSecondBaseman(),
                                                                            offenseTeamRecord.getThirdBaseman());
         Batter batter = playerService.findBatterPlayerByTeamIdWithOrder(gameId, teamId, currentBattingOrder);
+        batter.setBattingAverage(battingAverage);
         List<BatterDetail> battingRecords = playerService.findAllBattingRecordsOfCurrentInningByIds(gameId, teamId, offenseTeamRecord.getInning());
         return OffenseTeam.builder()
                           .teamId(teamId)
