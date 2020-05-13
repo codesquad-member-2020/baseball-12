@@ -5,6 +5,7 @@ import kr.codesquad.baseball.dto.*;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
+import kr.codesquad.baseball.dto.teamVO.LiveScorePlayerVO;
 import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
@@ -146,5 +147,19 @@ public class GameService {
                                .awayUser(awayUser)
                                .homeUser(homeUser)
                                .build();
+    }
+
+    public PlayerLiveScoreDto findPlayerLiveScore(int gameId) {
+        Game game = gameDao.findGameById(gameId);
+        LiveScorePlayerVO awayTeam = teamService.findPlayerLiveScoreByTeamId(game.getAwayTeam());
+        LiveScorePlayerVO homeTeam = teamService.findPlayerLiveScoreByTeamId(game.getHomeTeam());
+        User awayUser = userService.findUserById(game.getAwayUser());
+        User homeUser = userService.findUserById(game.getHomeUser());
+        return PlayerLiveScoreDto.builder()
+                                 .awayTeam(awayTeam)
+                                 .homeTeam(homeTeam)
+                                 .awayUser(awayUser)
+                                 .homeUser(homeUser)
+                                 .build();
     }
 }
