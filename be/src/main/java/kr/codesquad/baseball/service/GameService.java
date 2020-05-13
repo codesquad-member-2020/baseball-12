@@ -1,13 +1,11 @@
 package kr.codesquad.baseball.service;
 
 import kr.codesquad.baseball.dao.GameDao;
-import kr.codesquad.baseball.dto.GameInitializingRequestDto;
-import kr.codesquad.baseball.dto.MatchListDto;
-import kr.codesquad.baseball.dto.GamePitchRequestDto;
-import kr.codesquad.baseball.dto.GameProgressDetailDto;
+import kr.codesquad.baseball.dto.*;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
@@ -133,5 +131,20 @@ public class GameService {
         if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
         else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
         else { teamService.updateTeamRecordOfCurrentInning(statusBoard, game); }
+    }
+
+    public TeamLiveScoreDto findTeamLiveScore(int gameId) {
+        Game game = gameDao.findGameById(gameId);
+        LiveScoreTeamVO awayTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getAwayTeam());
+        LiveScoreTeamVO homeTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getHomeTeam());
+        User awayUser = userService.findUserById(game.getAwayUser());
+        User homeUser = userService.findUserById(game.getHomeUser());
+        return TeamLiveScoreDto.builder()
+                               .firsthalf(game.isFirsthalf())
+                               .awayTeam(awayTeam)
+                               .homeTeam(homeTeam)
+                               .awayUser(awayUser)
+                               .homeUser(homeUser)
+                               .build();
     }
 }
