@@ -16,6 +16,7 @@ public class Team {
     @JsonProperty("teamId")
     private Integer id;
 
+    @JsonProperty("teamName")
     private String name;
 
     @JsonIgnore
