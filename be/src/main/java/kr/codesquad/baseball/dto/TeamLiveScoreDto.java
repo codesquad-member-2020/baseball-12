@@ -1,6 +1,6 @@
 package kr.codesquad.baseball.dto;
 
-import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreOfTeam;
 import kr.codesquad.baseball.model.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +12,9 @@ public class TeamLiveScoreDto {
 
     boolean firsthalf;
 
-    LiveScoreTeamVO awayTeam;
+    LiveScoreOfTeam awayTeam;
 
-    LiveScoreTeamVO homeTeam;
+    LiveScoreOfTeam homeTeam;
 
     User awayUser;
 
