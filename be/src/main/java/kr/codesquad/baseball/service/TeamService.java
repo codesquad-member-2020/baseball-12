@@ -1,22 +1,17 @@
 package kr.codesquad.baseball.service;
 
+import kr.codesquad.baseball.commonconstant.Judgement;
 import kr.codesquad.baseball.dao.TeamDao;
-import kr.codesquad.baseball.dto.playerVO.BatterDetail;
-import kr.codesquad.baseball.dto.playerVO.BatterSummary;
-import kr.codesquad.baseball.dto.playerVO.Batter;
-import kr.codesquad.baseball.dto.playerVO.Pitcher;
-import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
-import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
-import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
-import kr.codesquad.baseball.dto.teamVO.TeamVO;
+import kr.codesquad.baseball.dto.playerVO.*;
+import kr.codesquad.baseball.dto.teamVO.*;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
 import kr.codesquad.baseball.model.Team;
 import kr.codesquad.baseball.model.TeamRecord;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -107,14 +102,50 @@ public class TeamService {
         return teamDao.findTeamById(teamId);
     }
 
-    public LiveScoreTeamVO findTeamLiveScoreByTeamId(int gameId, int teamId) {
+    public LiveScoreOfTeam findTeamLiveScoreByTeamId(int gameId, int teamId) {
         Team team = findTeamById(teamId);
         List<Integer> scores = teamDao.findScoreListOfAllInningByIds(gameId, teamId);
-        return LiveScoreTeamVO.builder()
+        return LiveScoreOfTeam.builder()
                               .teamId(team.getId())
                               .teamName(team.getName())
                               .totalScore(teamDao.findTotalScoreOfTeam(gameId, teamId))
                               .scores(scores)
                               .build();
+    }
+
+    public LiveScoreOfTeamWithPlayers findPlayerLiveScoreByTeamId(int gameId, int teamId) {
+        Team team = findTeamById(teamId);
+        List<Integer> playerIds = playerService.findPlayerIdsByTeamId(teamId);
+        List<BatterLiveScoreVO> playerRecords = playerIds.stream().map(playerId -> {
+            Batter batter = playerService.findBatterPlayerOfCurrentGameByIds(gameId, teamId, playerId);
+            double totalHitCountOfBatterInGame = batter.getHitCount();
+            double totalPlateAppearanceOfBatterInGame = batter.getPlateAppearance();
+            double battingAverageOfBatterInGame = totalHitCountOfBatterInGame / totalPlateAppearanceOfBatterInGame;
+            int totalOutCountOfBatterInGame = playerService.findTotalJudgementCountOfPlayerInGameByIds(gameId, playerId, Judgement.OUT);
+            return BatterLiveScoreVO.builder()
+                                    .playerId(batter.getPlayerId())
+                                    .playerName(batter.getPlayerName())
+                                    .battingOrder(batter.getBattingOrder())
+                                    .battingAverage(battingAverageOfBatterInGame)
+                                    .plateAppearance(batter.getPlateAppearance())
+                                    .hitCount(batter.getHitCount())
+                                    .outCount(totalOutCountOfBatterInGame)
+                                    .build();
+        }).collect(Collectors.toList());
+        int totalPlateAppearanceOfTeam = playerRecords.stream()
+                                        .map(batter -> batter.getPlateAppearance())
+                                        .reduce(0, (totalPlateAppearance, plateAppearance) -> totalPlateAppearance += plateAppearance);
+        int totalHitCountOfTeam = playerRecords.stream()
+                                        .map(batter -> batter.getHitCount())
+                                        .reduce(0, (totalHitCount, hitCount) -> totalHitCount += hitCount);
+        int totalOutCountOfTeam = playerRecords.stream()
+                                        .map(batter -> batter.getOutCount())
+                                        .reduce(0, (totalOutCount, outCount) -> totalOutCount += outCount);
+        return LiveScoreOfTeamWithPlayers.playerLiveScoreBuilder()
+                                         .totalPlateAppearance(totalPlateAppearanceOfTeam)
+                                         .totalHit(totalHitCountOfTeam)
+                                         .totalOut(totalOutCountOfTeam)
+                                         .playerRecords(playerRecords)
+                                         .build();
     }
 }

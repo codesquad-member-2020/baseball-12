@@ -5,8 +5,8 @@ import kr.codesquad.baseball.dto.*;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
-import kr.codesquad.baseball.dto.teamVO.LiveScorePlayerVO;
-import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreOfTeamWithPlayers;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreOfTeam;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
@@ -136,8 +136,8 @@ public class GameService {
 
     public TeamLiveScoreDto findTeamLiveScore(int gameId) {
         Game game = gameDao.findGameById(gameId);
-        LiveScoreTeamVO awayTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getAwayTeam());
-        LiveScoreTeamVO homeTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getHomeTeam());
+        LiveScoreOfTeam awayTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getAwayTeam());
+        LiveScoreOfTeam homeTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getHomeTeam());
         User awayUser = userService.findUserById(game.getAwayUser());
         User homeUser = userService.findUserById(game.getHomeUser());
         return TeamLiveScoreDto.builder()
@@ -151,8 +151,8 @@ public class GameService {
 
     public PlayerLiveScoreDto findPlayerLiveScore(int gameId) {
         Game game = gameDao.findGameById(gameId);
-        LiveScorePlayerVO awayTeam = teamService.findPlayerLiveScoreByTeamId(game.getAwayTeam());
-        LiveScorePlayerVO homeTeam = teamService.findPlayerLiveScoreByTeamId(game.getHomeTeam());
+        LiveScoreOfTeamWithPlayers awayTeam = teamService.findPlayerLiveScoreByTeamId(gameId, game.getAwayTeam());
+        LiveScoreOfTeamWithPlayers homeTeam = teamService.findPlayerLiveScoreByTeamId(gameId, game.getHomeTeam());
         User awayUser = userService.findUserById(game.getAwayUser());
         User homeUser = userService.findUserById(game.getHomeUser());
         return PlayerLiveScoreDto.builder()

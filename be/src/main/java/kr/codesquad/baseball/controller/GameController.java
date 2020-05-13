@@ -36,4 +36,9 @@ public class GameController {
     public ResponseEntity<ApiResponse<TeamLiveScoreDto>> showTeamLiveScore(@PathVariable int gameId) {
         return new ResponseEntity(ApiResponse.OK(true, gameService.findTeamLiveScore(gameId)), HttpStatus.OK);
     }
+
+    @GetMapping("/matches/{gameId}/player-score")
+    public ResponseEntity<ApiResponse<PlayerLiveScoreDto>> showPlayerLiveScore(@PathVariable int gameId) {
+        return new ResponseEntity(ApiResponse.OK(true, gameService.findPlayerLiveScore(gameId)), HttpStatus.OK);
+    }
 }
