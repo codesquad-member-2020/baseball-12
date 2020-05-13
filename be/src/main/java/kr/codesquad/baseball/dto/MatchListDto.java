@@ -10,6 +10,8 @@ import lombok.Setter;
 @Builder
 public class MatchListDto {
 
+    Integer matchId;
+
     Team awayTeam;
 
     Team homeTeam;

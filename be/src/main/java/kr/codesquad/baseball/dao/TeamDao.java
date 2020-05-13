@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class TeamDao {
@@ -100,5 +101,11 @@ public class TeamDao {
                                     .id(rs.getInt("id"))
                                     .name(rs.getString("name"))
                                     .build());
+    }
+
+    public List<Integer> findScoreListOfAllInningByIds(int gameId, int teamId) {
+        String SQL = "SELECT score FROM team_record " +
+                     "WHERE game = ? AND team = ?";
+        return jdbcTemplate.queryForList(SQL, new Object[]{gameId, teamId}, Integer.class);
     }
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Batter extends PlayerVO {
+public class BatterLiveScoreVO extends PlayerVO {
 
     private int battingOrder;
 
@@ -15,12 +15,15 @@ public class Batter extends PlayerVO {
 
     private int hitCount;
 
+    private int outCount;
+
     @Builder
-    public Batter(int playerId, String playerName, int battingOrder, double battingAverage, int plateAppearance, int hitCount) {
+    public BatterLiveScoreVO(int playerId, String playerName, int battingOrder, double battingAverage, int plateAppearance, int hitCount, int outCount) {
         super(playerId, playerName);
         this.battingOrder = battingOrder;
         this.battingAverage = battingAverage;
         this.plateAppearance = plateAppearance;
         this.hitCount = hitCount;
+        this.outCount = outCount;
     }
 }

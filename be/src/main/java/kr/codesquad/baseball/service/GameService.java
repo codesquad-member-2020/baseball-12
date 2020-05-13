@@ -1,13 +1,12 @@
 package kr.codesquad.baseball.service;
 
 import kr.codesquad.baseball.dao.GameDao;
-import kr.codesquad.baseball.dto.GameInitializingRequestDto;
-import kr.codesquad.baseball.dto.MatchListDto;
-import kr.codesquad.baseball.dto.GamePitchRequestDto;
-import kr.codesquad.baseball.dto.GameProgressDetailDto;
+import kr.codesquad.baseball.dto.*;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreOfTeamWithPlayers;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreOfTeam;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
@@ -42,12 +41,13 @@ public class GameService {
 
     public List<MatchListDto> findAllTypeOfMatches() {
         List<Game> allTypeOfMatches = gameDao.findAllMatches();
-        return allTypeOfMatches.stream().map(game -> {
-                Team awayTeam = teamService.findTeamById(game.getAwayTeam());
-                Team homeTeam = teamService.findTeamById(game.getHomeTeam());
-                User awayUser = userService.findUserById(game.getAwayUser());
-                User homeUser = userService.findUserById(game.getHomeUser());
+        return allTypeOfMatches.stream().map(match -> {
+                Team awayTeam = teamService.findTeamById(match.getAwayTeam());
+                Team homeTeam = teamService.findTeamById(match.getHomeTeam());
+                User awayUser = userService.findUserById(match.getAwayUser());
+                User homeUser = userService.findUserById(match.getHomeUser());
                 return MatchListDto.builder()
+                                   .matchId(match.getId())
                                    .awayTeam(awayTeam)
                                    .homeTeam(homeTeam)
                                    .awayUser(awayUser)
@@ -70,7 +70,7 @@ public class GameService {
     }
 
     public GameProgressDetailDto getGameProgressDetail(int gameId, int awayTeamId, int homeTeamId, int inning, boolean isFirsthalf) {
-        if (isFirsthalf) return defineGameProgressDetailByHalfTime(gameId, awayTeamId, homeTeamId, inning);
+        if (isFirsthalf) { return defineGameProgressDetailByHalfTime(gameId, awayTeamId, homeTeamId, inning); }
         return defineGameProgressDetailByHalfTime(gameId, homeTeamId, awayTeamId, inning);
     }
 
@@ -81,6 +81,7 @@ public class GameService {
         User homeUser = userService.findHomeUserByGameId(gameId);
         StatusBoard statusBoard = createRecentStatusBoard(gameId, inning, offenseTeam, defenseTeam);
         return GameProgressDetailDto.builder()
+                                    .gameId(gameId)
                                     .offenseTeam(offenseTeam)
                                     .defenseTeam(defenseTeam)
                                     .awayUser(awayUser)
@@ -128,8 +129,37 @@ public class GameService {
 
     public void updateStatusAfterPitch(StatusBoard statusBoard, Game game) {
         playerService.updatePlayerRecords(statusBoard, game);
-        if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) teamService.updateTeamRecordToChangeOffense(statusBoard, game);
-        else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) teamService.updateTeamRecordToChangeInning(statusBoard, game);
-        else teamService.updateTeamRecordOfCurrentInning(statusBoard, game);
+        if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
+        else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
+        else { teamService.updateTeamRecordOfCurrentInning(statusBoard, game); }
+    }
+
+    public TeamLiveScoreDto findTeamLiveScore(int gameId) {
+        Game game = gameDao.findGameById(gameId);
+        LiveScoreOfTeam awayTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getAwayTeam());
+        LiveScoreOfTeam homeTeam = teamService.findTeamLiveScoreByTeamId(gameId, game.getHomeTeam());
+        User awayUser = userService.findUserById(game.getAwayUser());
+        User homeUser = userService.findUserById(game.getHomeUser());
+        return TeamLiveScoreDto.builder()
+                               .firsthalf(game.isFirsthalf())
+                               .awayTeam(awayTeam)
+                               .homeTeam(homeTeam)
+                               .awayUser(awayUser)
+                               .homeUser(homeUser)
+                               .build();
+    }
+
+    public PlayerLiveScoreDto findPlayerLiveScore(int gameId) {
+        Game game = gameDao.findGameById(gameId);
+        LiveScoreOfTeamWithPlayers awayTeam = teamService.findPlayerLiveScoreByTeamId(gameId, game.getAwayTeam());
+        LiveScoreOfTeamWithPlayers homeTeam = teamService.findPlayerLiveScoreByTeamId(gameId, game.getHomeTeam());
+        User awayUser = userService.findUserById(game.getAwayUser());
+        User homeUser = userService.findUserById(game.getHomeUser());
+        return PlayerLiveScoreDto.builder()
+                                 .awayTeam(awayTeam)
+                                 .homeTeam(homeTeam)
+                                 .awayUser(awayUser)
+                                 .homeUser(homeUser)
+                                 .build();
     }
 }
