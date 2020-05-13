@@ -142,6 +142,8 @@ public class TeamService {
                                         .map(batter -> batter.getOutCount())
                                         .reduce(0, (totalOutCount, outCount) -> totalOutCount += outCount);
         return LiveScoreOfTeamWithPlayers.playerLiveScoreBuilder()
+                                         .teamId(team.getId())
+                                         .teamName(team.getName())
                                          .totalPlateAppearance(totalPlateAppearanceOfTeam)
                                          .totalHit(totalHitCountOfTeam)
                                          .totalOut(totalOutCountOfTeam)
