@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static kr.codesquad.baseball.commonconstant.Judgement.OUT;
+
 @Service
 public class PlayerService {
 
@@ -89,5 +91,17 @@ public class PlayerService {
 
     public double findBattingAverage(int teamId, int currentBattingOrder) {
         return playerDao.findBattingAverage(teamId, currentBattingOrder);
+    }
+
+    public List<Integer> findPlayerIdsByTeamId(int teamId) {
+        return playerDao.findPlayerIdsByTeamId(teamId);
+    }
+
+    public Batter findBatterPlayerOfCurrentGameByIds(int gameId, int teamId, int playerId) {
+        return playerDao.findBatterPlayerByIds(gameId, teamId, playerId);
+    }
+
+    public int findTotalJudgementCountOfPlayerInGameByIds(int gameId, int playerId, String judgement) {
+        return playerDao.findTotalOutCountOfPlayerByIds(gameId, playerId, judgement);
     }
 }

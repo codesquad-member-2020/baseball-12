@@ -66,11 +66,11 @@ public class PlayerDao {
                      "FROM player p LEFT OUTER JOIN player_record pr ON p.id = pr.player " +
                      "WHERE pr.game = ? AND p.team = ? AND p.batting_order = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId, currentBattingOrder},
-                (rs, rowNum) -> Batter.batterBuilder()
+                (rs, rowNum) -> Batter.builder()
                                       .playerId(rs.getInt("playerId"))
                                       .playerName(rs.getString("playerName"))
                                       .battingOrder(rs.getInt("battingOrder"))
-                                      .battingAverage(rs.getInt("battingAverage"))
+                                      .battingAverage(rs.getDouble("battingAverage"))
                                       .plateAppearance(rs.getInt("plateAppearance"))
                                       .hitCount(rs.getInt("hitCount"))
                                       .build());
@@ -151,5 +151,27 @@ public class PlayerDao {
     public Double findBattingAverage(int teamId, int currentBattingOrder) {
         String SQL = "SELECT batting_average FROM player WHERE team = ? AND batting_order = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{teamId, currentBattingOrder}, Double.class);
+    }
+
+    public Batter findBatterPlayerByIds(int gameId, int teamId, int playerId) {
+        String SQL = "SELECT p.id as playerId, p.name as playerName, p.batting_order as battingOrder, p.batting_average as battingAverage, " +
+                            "pr.hit_count as hitCount, pr.plate_appearance as plateAppearance " +
+                     "FROM player_record pr INNER JOIN player p ON pr.player = p.id " +
+                     "WHERE pr.game = ? AND p.team = ? AND pr.player = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, teamId, playerId},
+                (rs, rowNum) -> Batter.builder()
+                                      .playerId(rs.getInt("playerId"))
+                                      .playerName(rs.getString("playerName"))
+                                      .battingOrder(rs.getInt("battingOrder"))
+                                      .battingAverage(rs.getDouble("battingAverage"))
+                                      .hitCount(rs.getInt("hitCount"))
+                                      .plateAppearance(rs.getInt("plateAppearance"))
+                                      .build());
+    }
+
+    public Integer findTotalOutCountOfPlayerByIds(int gameId, int playerId, String judgement) {
+        String SQL = "SELECT COUNT(judgement) FROM batting_record " +
+                     "WHERE game = ? AND player = ? AND judgement = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, playerId, judgement}, Integer.class);
     }
 }
