@@ -6,7 +6,9 @@ import kr.codesquad.baseball.dto.playerVO.BatterSummary;
 import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.Pitcher;
 import kr.codesquad.baseball.dto.teamVO.DefenseTeam;
+import kr.codesquad.baseball.dto.teamVO.LiveScoreTeamVO;
 import kr.codesquad.baseball.dto.teamVO.OffenseTeam;
+import kr.codesquad.baseball.dto.teamVO.TeamVO;
 import kr.codesquad.baseball.model.Game;
 import kr.codesquad.baseball.model.StatusBoard;
 import kr.codesquad.baseball.model.Team;
@@ -103,5 +105,16 @@ public class TeamService {
 
     public Team findTeamById(int teamId) {
         return teamDao.findTeamById(teamId);
+    }
+
+    public LiveScoreTeamVO findTeamLiveScoreByTeamId(int gameId, int teamId) {
+        Team team = findTeamById(teamId);
+        List<Integer> scores = teamDao.findScoreListOfAllInningByIds(gameId, teamId);
+        return LiveScoreTeamVO.builder()
+                              .teamId(team.getId())
+                              .teamName(team.getName())
+                              .totalScore(teamDao.findTotalScoreOfTeam(gameId, teamId))
+                              .scores(scores)
+                              .build();
     }
 }
