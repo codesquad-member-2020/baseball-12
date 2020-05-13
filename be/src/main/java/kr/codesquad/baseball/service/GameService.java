@@ -71,7 +71,7 @@ public class GameService {
     }
 
     public GameProgressDetailDto getGameProgressDetail(int gameId, int awayTeamId, int homeTeamId, int inning, boolean isFirsthalf) {
-        if (isFirsthalf) return defineGameProgressDetailByHalfTime(gameId, awayTeamId, homeTeamId, inning);
+        if (isFirsthalf) { return defineGameProgressDetailByHalfTime(gameId, awayTeamId, homeTeamId, inning); }
         return defineGameProgressDetailByHalfTime(gameId, homeTeamId, awayTeamId, inning);
     }
 
@@ -130,8 +130,8 @@ public class GameService {
 
     public void updateStatusAfterPitch(StatusBoard statusBoard, Game game) {
         playerService.updatePlayerRecords(statusBoard, game);
-        if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) teamService.updateTeamRecordToChangeOffense(statusBoard, game);
-        else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) teamService.updateTeamRecordToChangeInning(statusBoard, game);
-        else teamService.updateTeamRecordOfCurrentInning(statusBoard, game);
+        if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
+        else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
+        else { teamService.updateTeamRecordOfCurrentInning(statusBoard, game); }
     }
 }

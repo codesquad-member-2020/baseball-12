@@ -75,9 +75,7 @@ public class TeamService {
     }
 
     public int findCurrentBattingOrder(int gameId, int teamId, int inning) {
-//        if (inning > 1) return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning - 1);
-//            else
-            return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
+        return teamDao.findCurrentBattingOrderOfInning(gameId, teamId, inning);
     }
 
     public void updateTeamRecordOfCurrentInning(StatusBoard statusBoard, Game game) {
@@ -90,8 +88,8 @@ public class TeamService {
         playerService.updatePlayerRecordsForChange(statusBoard, game);
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
         teamDao.updateCurrentGameInformation(currentInning, !game.isFirsthalf(), game.getId());
-        if (currentInning > 1) currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1);
-        else currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning);
+        if (currentInning > 1) { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1); }
+        else { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning); }
         teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), statusBoard.getInning(), currentBattingOrder);
     }
 
