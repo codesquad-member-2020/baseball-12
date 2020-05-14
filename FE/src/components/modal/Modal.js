@@ -25,7 +25,6 @@ const Test = styled.p`
 const Modal = () => {
   const history = useHistory();
   const { id } = useParams();
-  console.log(id);
   return (
     <Wrap>{id === 'test1' ? <Test>test1</Test> : <Test>test2</Test>}</Wrap>
   );

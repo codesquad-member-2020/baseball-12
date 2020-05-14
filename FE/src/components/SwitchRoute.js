@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
-import Login from './Login';
-import TeamSelect from './TeamSelect';
-import Match from './Match';
+import Login from './login/Login';
+import TeamSelect from './select/TeamSelect';
+import Match from './match/Match';
 import Modal from './modal/Modal';
 
 const SwitchRoute = () => {
   const location = useLocation();
   let background = location.state && location.state.background;
-  console.log(background);
   return (
     <div>
       <Switch location={background || location}>
