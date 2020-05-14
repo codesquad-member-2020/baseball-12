@@ -120,7 +120,9 @@ public class TeamService {
             Batter batter = playerService.findBatterPlayerOfCurrentGameByIds(gameId, teamId, playerId);
             double totalHitCountOfBatterInGame = batter.getHitCount();
             double totalPlateAppearanceOfBatterInGame = batter.getPlateAppearance();
-            double battingAverageOfBatterInGame = totalHitCountOfBatterInGame / totalPlateAppearanceOfBatterInGame;
+            double battingAverageOfBatterInGame;
+            if (totalPlateAppearanceOfBatterInGame == 0) { battingAverageOfBatterInGame = 0; }
+            else { battingAverageOfBatterInGame = totalHitCountOfBatterInGame / totalPlateAppearanceOfBatterInGame; }
             int totalOutCountOfBatterInGame = playerService.findTotalJudgementCountOfPlayerInGameByIds(gameId, playerId, Judgement.OUT);
             return BatterLiveScoreVO.builder()
                                     .playerId(batter.getPlayerId())
