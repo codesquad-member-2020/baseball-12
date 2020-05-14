@@ -1,4 +1,4 @@
-const TeamReducer = (state, { type, team }) => {
+const teamReducer = (state, { type, team }) => {
   switch (type) {
     case 'away':
       return {
@@ -19,4 +19,4 @@ const TeamReducer = (state, { type, team }) => {
   }
 };
 
-export default TeamReducer;
+export default teamReducer;

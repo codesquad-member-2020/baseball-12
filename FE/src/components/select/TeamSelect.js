@@ -1,5 +1,5 @@
-import React, { useState, useContext, useReducer } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import BackgroundImg from '../../images/baseball_field.png';
 import useFetch from '../useFetch';

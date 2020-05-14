@@ -15,7 +15,7 @@ const SwitchRoute = () => {
         <Route path="/team" component={TeamSelect} />
         <Route path="/match" component={Match} />
       </Switch>
-      {background && <Route path="/test/:id" children={<Modal />} />}
+      {background && <Route path="/modal/:id/:gameId" children={<Modal />} />}
     </div>
   );
 };

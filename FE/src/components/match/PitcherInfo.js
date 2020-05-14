@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import PitchContext from '../../contexts/pitchContext';
 
 const Wrap = styled.div`
   display: flex;
@@ -27,19 +28,23 @@ const Pitcher = styled.dl`
 const Batter = styled(Pitcher)``;
 
 const PitcherInfo = ({ game }) => {
+  const { pitchState } = useContext(PitchContext);
+  const state = pitchState ? pitchState : game;
   return (
     <Wrap>
       <Pitcher>
         <dt>투수</dt>
-        <dd>{game.defenseTeam.pitcher.playerName}</dd>
-        <dd># {game.defenseTeam.pitcher.pitchingCount}</dd>
+        <dd>{state.defenseTeam.pitcher.playerName}</dd>
+        <dd>#{state.defenseTeam.pitcher.pitchingCount}</dd>
       </Pitcher>
       <Batter>
         <dt>타자</dt>
-        <dd>{game.offenseTeam.batter.playerName}</dd>
+        <dd>{state.offenseTeam.batter.playerName}</dd>
         <dd>
-          {game.offenseTeam.batter.plateAppearance} 이닝
-          {game.offenseTeam.batter.hitCount} 안타
+          {state.offenseTeam.batter.plateAppearance}
+          타석
+          {state.offenseTeam.batter.hitCount}
+          안타
         </dd>
       </Batter>
     </Wrap>

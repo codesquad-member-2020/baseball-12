@@ -1,6 +1,8 @@
 import React from 'react';
-import { useHistory, useParams, withRouter } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
+import ScoreModal from './ScoreModal';
+import TeamPlayerList from './TeamPlayerList';
 
 const Wrap = styled.div`
   position: absolute;
@@ -24,9 +26,15 @@ const Test = styled.p`
 
 const Modal = () => {
   const history = useHistory();
-  const { id } = useParams();
+  const { id, gameId } = useParams();
   return (
-    <Wrap>{id === 'test1' ? <Test>test1</Test> : <Test>test2</Test>}</Wrap>
+    <Wrap>
+      {id === 'score' ? (
+        <ScoreModal gameId={gameId} click={history} />
+      ) : (
+        <TeamPlayerList gameId={gameId} click={history} />
+      )}
+    </Wrap>
   );
 };
 

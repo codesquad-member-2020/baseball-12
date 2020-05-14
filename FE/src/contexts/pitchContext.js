@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const pitchContext = createContext({});
+const PitchContext = createContext({});
 
-export default pitchContext;
+export default PitchContext;

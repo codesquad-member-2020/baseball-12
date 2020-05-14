@@ -5,10 +5,10 @@ import GrobalStyle from './styles/globalStyles';
 import theme from './styles/theme';
 import SwitchRoute from './components/SwitchRoute';
 import SelectTeamContext from './contexts/selectTeam';
-import TeamReducer from './reducer/teamReducer';
+import teamReducer from './reducer/teamReducer';
 
 function App() {
-  const [state, dispatch] = useReducer(TeamReducer, {
+  const [state, dispatch] = useReducer(teamReducer, {
     type: null,
     team: null,
   });

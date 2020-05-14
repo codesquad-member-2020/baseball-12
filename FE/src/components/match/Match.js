@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import groundBg from '../../images/bg_ground.jpg';
 import Score from './Score';
 import PitcherInfo from './PitcherInfo';
-import SelectTeam from '../../contexts/SelectTeam';
+import SelectTeamContext from '../../contexts/selectTeam';
 import Ground from './Ground';
 import BatterHistory from './BatterHistory';
 import usePostFetch from '../usePostFetch';
+import PitchContext from '../../contexts/pitchContext';
+import pitchReducer from '../../reducer/pitchReducer';
 
 const Wrap = styled.div`
   display: grid;
@@ -20,17 +22,18 @@ const Wrap = styled.div`
 `;
 
 const Match = () => {
-  const { state } = useContext(SelectTeam);
+  const { state } = useContext(SelectTeamContext);
+  const [pitchState, pitchDispatch] = useReducer(pitchReducer, null);
   const [game, setGame] = useState({});
   const loading = usePostFetch(setGame, process.env.REACT_APP_START_GAME, {
     matchId: state.matchId,
   });
-  console.log(loading);
+
   if (loading) {
     return <Wrap />;
   }
   return (
-    <>
+    <PitchContext.Provider value={{ pitchState, pitchDispatch }}>
       <Wrap>
         <Score
           player={state.type}
@@ -38,10 +41,10 @@ const Match = () => {
           game={game}
         />
         <PitcherInfo game={game} />
-        <Ground />
+        <Ground gameId={game.gameId} />
         <BatterHistory />
       </Wrap>
-    </>
+    </PitchContext.Provider>
   );
 };
 

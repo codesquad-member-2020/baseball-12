@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import PitchContext from '../../contexts/pitchContext';
 
 const Wrap = styled.div`
   position: relative;
@@ -63,6 +64,8 @@ const Versus = styled.span`
 
 const Score = ({ player, team, game }) => {
   const location = useLocation();
+  const { pitchState } = useContext(PitchContext);
+  const state = pitchState ? pitchState : game;
   const isAwayPlayer = player === 'away' ? true : false;
 
   return (
@@ -70,22 +73,25 @@ const Score = ({ player, team, game }) => {
       <AwayTeam className={isAwayPlayer && 'player'}>
         <dt>{team.away}</dt>
         <dd>
-          {game.statusBoard.firsthalf
-            ? game.offenseTeam.totalScore
-            : game.defenseTeam.totalScore}
+          {state.statusBoard.firsthalf
+            ? state.offenseTeam.totalScore
+            : state.defenseTeam.totalScore}
         </dd>
       </AwayTeam>
       <Versus>vs</Versus>
       <HomeTeam className={!isAwayPlayer && 'player'}>
         <dt>{team.home}</dt>
         <dd>
-          {!game.statusBoard.firsthalf
-            ? game.offenseTeam.totalScore
-            : game.defenseTeam.totalScore}
+          {!state.statusBoard.firsthalf
+            ? state.offenseTeam.totalScore
+            : state.defenseTeam.totalScore}
         </dd>
       </HomeTeam>
       <ModalLink
-        to={{ pathname: '/test/test1', state: { background: location } }}
+        to={{
+          pathname: `/modal/score/${game.gameId}`,
+          state: { background: location },
+        }}
       >
         점수 상세보기
       </ModalLink>
