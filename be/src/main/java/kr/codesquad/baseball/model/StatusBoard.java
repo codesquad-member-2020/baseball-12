@@ -43,6 +43,9 @@ public class StatusBoard {
     @JsonIgnore
     private int currentBattingOrder;
 
+//    @JsonIgnore
+    private int plateAppearance;
+
     @JsonIgnore
     private int addedHitCount;
 
@@ -88,6 +91,7 @@ public class StatusBoard {
             ball = 0;
             hit += 1;
             addedHitCount += 1;
+            plateAppearance += 1;
             currentBattingOrder += 1;
             arrangeSideEffectOfStatus(HIT);
             break;
@@ -95,6 +99,7 @@ public class StatusBoard {
             strike = 0;
             ball = 0;
             out += 1;
+            plateAppearance += 1;
             currentBattingOrder += 1;
             arrangeSideEffectOfStatus(OUT);
             break;
@@ -106,6 +111,7 @@ public class StatusBoard {
             ball = 0;
             hit += 1;
             addedHitCount += 1;
+            plateAppearance += 1;
             currentBattingOrder += 1;
             judgement = HIT;
             this.judgement = HIT;
@@ -117,9 +123,12 @@ public class StatusBoard {
             strike = 0;
             ball = 0;
             out += 1;
+            plateAppearance += 1;
             currentBattingOrder += 1;
             this.judgement = OUT;
         }
+
+        if (out == 3) { plateAppearance -= 1; }
 
         if (currentBattingOrder > 9) currentBattingOrder = 1;
     }
