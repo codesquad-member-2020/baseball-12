@@ -122,7 +122,7 @@ public class PlayerDao {
     }
 
     public void updatePlayerRecordOfBatter(int batterId, int hitCount, int gameId) {
-        String SQL = "UPDATE player_record SET hit_count = hit_count + ?, plate_appearance = plate_appearance + 1 " +
+        String SQL = "UPDATE player_record SET hit_count = hit_count + ? " +
                      "WHERE game = ? AND player = ?";
         jdbcTemplate.update(SQL, hitCount, gameId, batterId);
     }
@@ -173,5 +173,29 @@ public class PlayerDao {
         String SQL = "SELECT COUNT(judgement) FROM batting_record " +
                      "WHERE game = ? AND player = ? AND judgement = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{gameId, playerId, judgement}, Integer.class);
+    }
+
+    public void plusOnePointOfPlateAppearance(int gameId, int batterId) {
+        String SQL = "UPDATE player_record SET plate_appearance = plate_appearance + 1 " +
+                     "WHERE game = ? AND player = ?";
+        jdbcTemplate.update(SQL, gameId, batterId);
+    }
+
+    public Integer findBatterIdByTeamIdWithOrder(int awayTeamId) {
+        String SQL = "SELECT id FROM player " +
+                     "WHERE team = ? AND batting_order = 1";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{awayTeamId}, Integer.class);
+    }
+
+    public Integer findBatterId(int teamId, int currentBattingOrder) {
+        String SQL = "SELECT id FROM player " +
+                     "WHERE team = ? AND batting_order = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{teamId, currentBattingOrder}, Integer.class);
+    }
+
+    public void updatePlateAppearanceOfNextBatter(int gameId, int nextBatterId, int plateAppearance) {
+        String SQL = "UPDATE player_record SET plate_appearance = plate_appearance + ? " +
+                     "WHERE game = ? AND player = ?";
+        jdbcTemplate.update(SQL, plateAppearance, gameId, nextBatterId);
     }
 }

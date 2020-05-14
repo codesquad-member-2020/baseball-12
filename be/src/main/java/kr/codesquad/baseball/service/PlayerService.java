@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static kr.codesquad.baseball.commonconstant.Judgement.OUT;
-
 @Service
 public class PlayerService {
 
@@ -31,6 +29,8 @@ public class PlayerService {
         List<Integer> homePlayerIds = playerDao.findPlayerIdsByTeamId(homeTeamId);
         awayPlayerIds.forEach(awayId -> playerDao.insertPlayerRecord(gameId, awayId));
         homePlayerIds.forEach(homeId -> playerDao.insertPlayerRecord(gameId, homeId));
+        int firstBatterId = playerDao.findBatterIdByTeamIdWithOrder(awayTeamId);
+        playerDao.plusOnePointOfPlateAppearance(gameId, firstBatterId);
     }
 
     public List<BatterSummary> findBasemanByPlayerIds(Integer firstBaseman, Integer secondBaseman, Integer thirdBaseman) {
@@ -74,6 +74,8 @@ public class PlayerService {
     }
 
     public void updatePlayerRecords(StatusBoard statusBoard, Game game) {
+        int nextBatterId = findBatterIdByTeamIdWithOrder(statusBoard.getTeamId(), statusBoard.getCurrentBattingOrder());
+        playerDao.updatePlateAppearanceOfNextBatter(game.getId(), nextBatterId, statusBoard.getPlateAppearance());
         playerDao.updatePlayerRecordOfBatter(statusBoard.getBatterId(), statusBoard.getAddedHitCount(), game.getId());
         playerDao.updatePlayerRecordOfPitcher(statusBoard.getPitcherId(), game.getId());
         playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(), statusBoard.getJudgement(),
@@ -103,5 +105,13 @@ public class PlayerService {
 
     public int findTotalJudgementCountOfPlayerInGameByIds(int gameId, int playerId, String judgement) {
         return playerDao.findTotalOutCountOfPlayerByIds(gameId, playerId, judgement);
+    }
+
+    public int findBatterIdByTeamIdWithOrder(int teamId, int currentBattingOrder) {
+        return playerDao.findBatterId(teamId, currentBattingOrder);
+    }
+
+    public void plusOnePointOfPlateAppearance(int gameId, int nextBatterId) {
+        playerDao.plusOnePointOfPlateAppearance(gameId, nextBatterId);
     }
 }

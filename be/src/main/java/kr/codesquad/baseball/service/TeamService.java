@@ -87,6 +87,8 @@ public class TeamService {
         teamDao.updateCurrentGameInformation(currentInning, !game.isFirsthalf(), game.getId());
         if (currentInning > 1) { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1); }
         else { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning); }
+        int nextBatterId = playerService.findBatterIdByTeamIdWithOrder(game.getHomeTeam(), currentBattingOrder);
+        playerService.plusOnePointOfPlateAppearance(game.getId(), nextBatterId);
         teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), statusBoard.getInning(), currentBattingOrder);
     }
 
@@ -95,6 +97,8 @@ public class TeamService {
         teamDao.updateCurrentGameInformation(statusBoard.getInning() + 1, !game.isFirsthalf(), game.getId());
         initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + 1);
         int currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning());
+        int nextBatterId = playerService.findBatterIdByTeamIdWithOrder(game.getHomeTeam(), currentBattingOrder);
+        playerService.plusOnePointOfPlateAppearance(game.getId(), nextBatterId);
         teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning() + 1, currentBattingOrder);
     }
 
