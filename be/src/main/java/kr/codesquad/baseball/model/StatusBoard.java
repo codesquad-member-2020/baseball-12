@@ -43,7 +43,7 @@ public class StatusBoard {
     @JsonIgnore
     private int currentBattingOrder;
 
-//    @JsonIgnore
+    @JsonIgnore
     private int plateAppearance;
 
     @JsonIgnore
