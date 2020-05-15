@@ -46,21 +46,23 @@ const makeCircle = (length, type) => {
 };
 const OutCount = () => {
   const { pitchState } = useContext(PitchContext);
-  if (!pitchState) return <Wrap />;
+
   return (
     <Wrap>
       <ul>
         <li key="s">
           <span>S</span>
-          {makeCircle(pitchState.statusBoard.strike, 'strike')}
+          {!pitchState
+            ? ''
+            : makeCircle(pitchState.statusBoard.strike, 'strike')}
         </li>
         <li key="b">
           <span>B</span>
-          {makeCircle(pitchState.statusBoard.ball, 'ball')}
+          {!pitchState ? '' : makeCircle(pitchState.statusBoard.ball, 'ball')}
         </li>
         <li key="o">
           <span>O</span>
-          {makeCircle(pitchState.statusBoard.out, 'out')}
+          {!pitchState ? '' : makeCircle(pitchState.statusBoard.out, 'out')}
         </li>
       </ul>
     </Wrap>

@@ -95,11 +95,6 @@ const Score = ({ player, team, game }) => {
       >
         점수 상세보기
       </ModalLink>
-      {/* <ModalLink
-        to={{ pathname: '/test/test2', state: { background: location } }}
-      >
-        선수명단
-      </ModalLink> */}
     </Wrap>
   );
 };

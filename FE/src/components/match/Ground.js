@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Filed from './canvas/Filed';
 import PitchContext from '../../contexts/pitchContext';
 import OutCount from './OutCount';
+import AnimationFiled from './AnimationFiled';
 
 const Wrap = styled.div`
   position: relative;
@@ -59,6 +60,7 @@ const Ground = ({ gameId }) => {
         </Inning>
       )}
       <Filed width={400} height={400} />
+      <AnimationFiled />
       <Pitch onClick={handlePitch}>Pitch!</Pitch>
     </Wrap>
   );

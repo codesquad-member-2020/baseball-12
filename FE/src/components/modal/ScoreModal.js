@@ -7,31 +7,42 @@ const Wrap = styled.div`
   top: 10%;
   left: 0;
   right: 0;
-  width: 90%;
+  width: 70%;
   margin: 0 auto;
-  background: #fff;
+  padding: 20px 0;
+  background: ${(props) => props.theme.navy};
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const Table = styled.table`
-  display: flex;
-  flex-direction: column;
   width: 80%;
   margin: 0 auto;
 `;
 
 const Tr = styled.tr`
   height: 70px;
+  &:first-child {
+    border-bottom: 2px solid #fff;
+  }
+  > th,
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
 `;
 
 const Close = styled.button`
   position: absolute;
-  top: 130%;
+  top: 110%;
   left: 0;
-  padding: 5px 10px;
+  padding: 15px 20px;
   font-size: 16px;
-  background: ${(props) => props.theme.mainFontColor};
-  border: 3px solid #fff;
-  border-radius: 5px;
+  background: ${(props) => props.theme.softGreen};
+  border-bottom: 5px solid ${(props) => props.theme.midGreen};
+  border-radius: 7px;
+  box-shadow: 0px 0px 10px ${(props) => props.theme.opacityNavy};
 `;
 
 const ScoreModal = ({ gameId, click }) => {
@@ -57,28 +68,24 @@ const ScoreModal = ({ gameId, click }) => {
                 )}
               </Tr>
               <Tr>
-                {[...Array(Number(process.env.REACT_APP_TOTAL_INNING) + 1)].map(
-                  (n, index) => (
+                {score.awayTeam.scores.map((teamScore, idx) => {
+                  return (
                     <>
-                      {!index && <th>{score.awayTeam.teamName}</th>}
-                      {score.awayTeam.scores.map((teamScore) => (
-                        <td>{teamScore}</td>
-                      ))}
+                      {!idx && <th>{score.awayTeam.teamName}</th>}
+                      {<td>{teamScore}</td>}
                     </>
-                  )
-                )}
+                  );
+                })}
               </Tr>
               <Tr>
-                {[...Array(Number(process.env.REACT_APP_TOTAL_INNING) + 1)].map(
-                  (n, index) => (
+                {score.homeTeam.scores.map((teamScore, idx) => {
+                  return (
                     <>
-                      {!index && <th>{score.homeTeam.teamName}</th>}
-                      {score.homeTeam.scores.map((teamScore) => (
-                        <td>{teamScore}</td>
-                      ))}
+                      {!idx && <th>{score.homeTeam.teamName}</th>}
+                      {<td>{teamScore}</td>}
                     </>
-                  )
-                )}
+                  );
+                })}
               </Tr>
             </tbody>
           </Table>

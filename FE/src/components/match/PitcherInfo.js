@@ -21,6 +21,7 @@ const Pitcher = styled.dl`
   }
   > dd {
     display: inline-block;
+    margin-left: 3px;
     color: ${(props) => props.theme.softGreen};
   }
 `;
@@ -35,7 +36,7 @@ const PitcherInfo = ({ game }) => {
       <Pitcher>
         <dt>투수</dt>
         <dd>{state.defenseTeam.pitcher.playerName}</dd>
-        <dd>#{state.defenseTeam.pitcher.pitchingCount}</dd>
+        <dd># {state.defenseTeam.pitcher.pitchingCount}</dd>
       </Pitcher>
       <Batter>
         <dt>타자</dt>
