@@ -1,18 +1,26 @@
-import React, { useState, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/Login';
-import TeamSelect from './components/TeamSelect';
-import Match from './components/Match';
+import React, { useState, useReducer } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import GrobalStyle from './styles/globalStyles';
+import theme from './styles/theme';
+import SwitchRoute from './components/SwitchRoute';
+import SelectTeamContext from './contexts/selectTeam';
+import teamReducer from './reducer/teamReducer';
 
 function App() {
+  const [state, dispatch] = useReducer(teamReducer, {
+    type: null,
+    team: null,
+  });
   return (
-    <div>
-      <Router>
-        <Route path="/" exact={true} component={Login} />
-        <Route path="/team" component={TeamSelect} />
-        <Route path="/match" component={Match} />
-      </Router>
-    </div>
+    <ThemeProvider theme={theme}>
+      <SelectTeamContext.Provider value={{ state, dispatch }}>
+        <GrobalStyle />
+        <Router>
+          <SwitchRoute />
+        </Router>
+      </SelectTeamContext.Provider>
+    </ThemeProvider>
   );
 }
 
