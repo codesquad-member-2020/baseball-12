@@ -43,5 +43,5 @@
 <br/>
 
 # 문서 링크
-[**API 문서**]()
+[**API 문서**](https://www.notion.so/BASEBALL-ONLINE-API-DOCUMENT-0078de3a961140af8c2bb45b252c9d43)
 
