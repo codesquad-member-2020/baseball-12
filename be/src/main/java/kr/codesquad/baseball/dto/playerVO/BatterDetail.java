@@ -13,7 +13,7 @@ public class BatterDetail extends BatterSummary {
     private List<BattingRecord> battings;
 
     @Builder(builderMethodName = "batterDetailBuilder")
-    public BatterDetail(int playerId, String playerName, int battingOrder, List<BattingRecord> battings) {
+    public BatterDetail(Integer playerId, String playerName, int battingOrder, List<BattingRecord> battings) {
         super(playerId, playerName, battingOrder);
         this.battings = battings;
     }

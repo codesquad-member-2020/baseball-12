@@ -1,13 +1,10 @@
 package kr.codesquad.baseball.dto.teamVO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-@AllArgsConstructor
 public class TeamVO {
 
     @JsonIgnore
@@ -19,4 +16,13 @@ public class TeamVO {
 
     @JsonIgnore
     private int score;
+
+    public TeamVO() {}
+
+    public TeamVO(Integer teamId, String teamName, int totalScore, int score) {
+        this.teamId = teamId;
+        this.teamName = teamName;
+        this.totalScore = totalScore;
+        this.score = score;
+    }
 }

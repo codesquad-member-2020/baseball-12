@@ -16,7 +16,7 @@ public class Batter extends PlayerVO {
     private int hitCount;
 
     @Builder
-    public Batter(int playerId, String playerName, int battingOrder, double battingAverage, int plateAppearance, int hitCount) {
+    public Batter(Integer playerId, String playerName, int battingOrder, double battingAverage, int plateAppearance, int hitCount) {
         super(playerId, playerName);
         this.battingOrder = battingOrder;
         this.battingAverage = battingAverage;

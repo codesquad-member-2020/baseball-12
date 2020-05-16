@@ -7,4 +7,10 @@ import lombok.Setter;
 public class GamePitchRequestDto {
 
     private Integer gameId;
+
+    public GamePitchRequestDto() {}
+
+    public GamePitchRequestDto(Integer gameId) {
+        this.gameId = gameId;
+    }
 }

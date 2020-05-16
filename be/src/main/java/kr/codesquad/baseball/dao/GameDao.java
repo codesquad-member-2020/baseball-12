@@ -29,14 +29,14 @@ public class GameDao {
                      "FROM matches WHERE id = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{matchId},
                 (rs, rowNum) -> Game.builder()
-                        .id(rs.getInt("id"))
-                        .awayTeam(rs.getInt("away_team"))
-                        .homeTeam(rs.getInt("home_team"))
-                        .awayUser(rs.getInt("away_user"))
-                        .homeUser(rs.getInt("home_user"))
-                        .inning(rs.getInt("inning"))
-                        .isFirsthalf(rs.getBoolean("is_firsthalf"))
-                        .build());
+                                    .id(rs.getInt("id"))
+                                    .awayTeam(rs.getInt("away_team"))
+                                    .homeTeam(rs.getInt("home_team"))
+                                    .awayUser(rs.getInt("away_user"))
+                                    .homeUser(rs.getInt("home_user"))
+                                    .inning(rs.getInt("inning"))
+                                    .isFirsthalf(rs.getBoolean("is_firsthalf"))
+                                    .build());
     }
 
     public Game findGameById(Integer gameId) {
@@ -58,10 +58,10 @@ public class GameDao {
         String SQL = "INSERT INTO game (away_team, home_Team, inning, is_firsthalf) " +
                      "VALUES (:awayTeam, :homeTeam, :inning, :isFirsthalf)";
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                                            .addValue("awayTeam", matchType.getAwayTeam())
-                                            .addValue("homeTeam", matchType.getHomeTeam())
-                                            .addValue("inning", matchType.getInning())
-                                            .addValue("isFirsthalf", matchType.isFirsthalf());
+                                                .addValue("awayTeam", matchType.getAwayTeam())
+                                                .addValue("homeTeam", matchType.getHomeTeam())
+                                                .addValue("inning", matchType.getInning())
+                                                .addValue("isFirsthalf", matchType.isFirsthalf());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         Integer generatedGameId = namedParameterJdbcTemplate.update(SQL, namedParameters, keyHolder, new String[]{"generatedGameId"});
         return keyHolder.getKey().intValue();
@@ -75,11 +75,11 @@ public class GameDao {
     public List<Game> findAllMatches() {
         String SQL = "SELECT id, away_team, home_team, away_user, home_user FROM matches";
         return jdbcTemplate.query(SQL, (rs, rowNum) -> Game.builder()
-                .id(rs.getInt("id"))
-                .awayTeam(rs.getInt("away_team"))
-                .homeTeam(rs.getInt("home_team"))
-                .awayUser(rs.getInt("away_user"))
-                .homeUser(rs.getInt("home_user"))
-                .build());
+                                                           .id(rs.getInt("id"))
+                                                           .awayTeam(rs.getInt("away_team"))
+                                                           .homeTeam(rs.getInt("home_team"))
+                                                           .awayUser(rs.getInt("away_user"))
+                                                           .homeUser(rs.getInt("home_user"))
+                                                           .build());
     }
 }

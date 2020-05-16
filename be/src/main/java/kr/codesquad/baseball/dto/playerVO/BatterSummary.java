@@ -10,7 +10,7 @@ public class BatterSummary extends PlayerVO {
     private int battingOrder;
 
     @Builder
-    public BatterSummary(int playerId, String playerName, int battingOrder) {
+    public BatterSummary(Integer playerId, String playerName, int battingOrder) {
         super(playerId, playerName);
         this.battingOrder = battingOrder;
     }

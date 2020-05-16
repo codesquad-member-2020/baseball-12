@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
-
 @Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
 @Builder
 public class Team {
 
@@ -21,4 +18,10 @@ public class Team {
 
     @JsonIgnore
     private int score;
+
+    public Team(Integer id, String name, int score) {
+        this.id = id;
+        this.name = name;
+        this.score = score;
+    }
 }

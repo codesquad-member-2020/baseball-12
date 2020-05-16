@@ -66,10 +66,10 @@ public class StatusBoard {
 
     public String createJudgement(double battingAverage) {
         double seed = Math.random();
-        if (seed < 0.1) judgement = OUT;
-        else if (seed < (1 - battingAverage) / 2 - 0.05) judgement = STRIKE;
-        else if (seed < ((1 - battingAverage) / 2 - 0.05) * 2) judgement = BALL;
-        else judgement = HIT;
+        if (seed < 0.1) { judgement = OUT; }
+        else if (seed < (1 - battingAverage) / 2 - 0.05) { judgement = STRIKE; }
+        else if (seed < ((1 - battingAverage) / 2 - 0.05) * 2) { judgement = BALL; }
+        else { judgement = HIT; }
         return judgement;
     }
 

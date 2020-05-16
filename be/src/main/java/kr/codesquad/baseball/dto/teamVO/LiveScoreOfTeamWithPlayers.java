@@ -1,6 +1,5 @@
 package kr.codesquad.baseball.dto.teamVO;
 
-import kr.codesquad.baseball.dto.playerVO.Batter;
 import kr.codesquad.baseball.dto.playerVO.BatterLiveScoreVO;
 import kr.codesquad.baseball.model.Team;
 import lombok.Builder;
@@ -21,7 +20,7 @@ public class LiveScoreOfTeamWithPlayers extends Team {
     List<BatterLiveScoreVO> playerRecords;
 
     @Builder(builderMethodName = "playerLiveScoreBuilder")
-    public LiveScoreOfTeamWithPlayers(int teamId, String teamName, int score, int totalPlateAppearance, int totalHit, int totalOut, List<BatterLiveScoreVO> playerRecords) {
+    public LiveScoreOfTeamWithPlayers(Integer teamId, String teamName, int score, int totalPlateAppearance, int totalHit, int totalOut, List<BatterLiveScoreVO> playerRecords) {
         super(teamId, teamName, score);
         this.totalPlateAppearance = totalPlateAppearance;
         this.totalHit = totalHit;

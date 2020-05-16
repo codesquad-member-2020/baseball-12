@@ -33,8 +33,8 @@ public class UserDao {
                      "WHERE g.id = ?";
         return DataAccessUtils.singleResult(jdbcTemplate.query(SQL, new Object[]{gameId},
                 (rs, rowNum) -> new User(rs.getInt("userId"),
-                        rs.getString("userName"),
-                        rs.getString("userEmail"))));
+                                         rs.getString("userName"),
+                                         rs.getString("userEmail"))));
     }
 
     public User findUserById(int userId) {

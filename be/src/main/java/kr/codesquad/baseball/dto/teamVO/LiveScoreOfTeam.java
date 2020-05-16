@@ -12,7 +12,7 @@ public class LiveScoreOfTeam extends TeamVO {
     List<Integer> scores;
 
     @Builder
-    public LiveScoreOfTeam(int teamId, String teamName, int totalScore, int score, List<Integer> scores) {
+    public LiveScoreOfTeam(Integer teamId, String teamName, int totalScore, int score, List<Integer> scores) {
         super(teamId, teamName, totalScore, score);
         this.scores = scores;
     }

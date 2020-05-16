@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/matches")
 public class GameController {
 
     private final GameService gameService;
@@ -17,27 +18,27 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/matches")
+    @GetMapping("")
     public ResponseEntity<ApiResponse<MatchListDto>> showAll() {
         return new ResponseEntity(ApiResponse.OK(true, gameService.findAllTypeOfMatches()), HttpStatus.OK);
     }
 
-    @PostMapping("/matches/start")
+    @PostMapping("/start")
     public ResponseEntity<ApiResponse<GameProgressDetailDto>> start(@RequestBody GameInitializingRequestDto initializingRequestDto) {
         return new ResponseEntity(ApiResponse.OK(true, gameService.initializeGame(initializingRequestDto)), HttpStatus.OK);
     }
 
-    @PostMapping("/matches/pitch")
+    @PostMapping("/pitch")
     public ResponseEntity<ApiResponse<GameProgressDetailDto>> pitch(@RequestBody GamePitchRequestDto gamePitchRequestDto) {
         return new ResponseEntity(ApiResponse.OK(true, gameService.tryPitch(gamePitchRequestDto)), HttpStatus.OK);
     }
 
-    @GetMapping("/matches/{gameId}/team-score")
+    @GetMapping("/{gameId}/team-score")
     public ResponseEntity<ApiResponse<TeamLiveScoreDto>> showTeamLiveScore(@PathVariable int gameId) {
         return new ResponseEntity(ApiResponse.OK(true, gameService.findTeamLiveScore(gameId)), HttpStatus.OK);
     }
 
-    @GetMapping("/matches/{gameId}/player-score")
+    @GetMapping("/{gameId}/player-score")
     public ResponseEntity<ApiResponse<PlayerLiveScoreDto>> showPlayerLiveScore(@PathVariable int gameId) {
         return new ResponseEntity(ApiResponse.OK(true, gameService.findPlayerLiveScore(gameId)), HttpStatus.OK);
     }

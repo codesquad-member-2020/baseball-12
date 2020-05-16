@@ -1,17 +1,21 @@
 package kr.codesquad.baseball.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
 public class ApiResponse<T> {
 
     private boolean status;
 
     private T data;
+
+    public ApiResponse() {}
+
+    public ApiResponse(boolean status, T data) {
+        this.status = status;
+        this.data = data;
+    }
 
     public static <T> ApiResponse<T> OK(boolean status, T data) {
         return new ApiResponse<>(status, data);

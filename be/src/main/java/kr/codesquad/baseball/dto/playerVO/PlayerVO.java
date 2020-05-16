@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter @Setter
-@AllArgsConstructor
 public class PlayerVO {
 
     @JsonIgnore
-    private int playerId;
+    private Integer playerId;
 
     private String playerName;
+
+    public PlayerVO() {}
+
+    public PlayerVO(Integer playerId, String playerName) {
+        this.playerId = playerId;
+        this.playerName = playerName;
+    }
 }

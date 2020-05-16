@@ -7,7 +7,6 @@ import kr.codesquad.baseball.model.User;
 import lombok.*;
 
 @Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
 @Builder
 public class GameProgressDetailDto {
 
@@ -22,4 +21,13 @@ public class GameProgressDetailDto {
     User awayUser;
 
     User homeUser;
+
+    public GameProgressDetailDto(int gameId, StatusBoard statusBoard, OffenseTeam offenseTeam, DefenseTeam defenseTeam, User awayUser, User homeUser) {
+        this.gameId = gameId;
+        this.statusBoard = statusBoard;
+        this.offenseTeam = offenseTeam;
+        this.defenseTeam = defenseTeam;
+        this.awayUser = awayUser;
+        this.homeUser = homeUser;
+    }
 }

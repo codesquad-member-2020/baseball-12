@@ -1,13 +1,11 @@
 package kr.codesquad.baseball.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Getter @Setter
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -17,4 +15,12 @@ public class User {
     private String name;
 
     private String email;
+
+    public User() {}
+
+    public User(Integer id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
 }

@@ -61,11 +61,11 @@ public class TeamDao {
         String SQL = "UPDATE team_record SET score = :score, current_batting_order = :currentBattingOrder " +
                      "WHERE team = :teamId AND game = :gameId AND inning = :inning";
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                                            .addValue("score", statusBoard.getScore())
-                                            .addValue("currentBattingOrder", statusBoard.getCurrentBattingOrder())
-                                            .addValue("teamId", statusBoard.getTeamId())
-                                            .addValue("gameId", game.getId())
-                                            .addValue("inning", statusBoard.getInning());
+                                                .addValue("score", statusBoard.getScore())
+                                                .addValue("currentBattingOrder", statusBoard.getCurrentBattingOrder())
+                                                .addValue("teamId", statusBoard.getTeamId())
+                                                .addValue("gameId", game.getId())
+                                                .addValue("inning", statusBoard.getInning());
         namedParameterJdbcTemplate.update(SQL, namedParameters);
     }
 
