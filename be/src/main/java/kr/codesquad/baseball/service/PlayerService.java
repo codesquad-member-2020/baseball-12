@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
+import static kr.codesquad.baseball.commonconstant.ConstantsCoveringMagicNumber.*;
 
 @Service
 public class PlayerService {

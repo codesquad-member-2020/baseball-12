@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 
 import static kr.codesquad.baseball.commonconstant.Judgement.*;
-import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
+import static kr.codesquad.baseball.commonconstant.ConstantsCoveringMagicNumber.*;
 
 @Getter @Setter
 @AllArgsConstructor

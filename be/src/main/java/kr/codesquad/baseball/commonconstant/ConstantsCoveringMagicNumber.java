@@ -1,6 +1,6 @@
 package kr.codesquad.baseball.commonconstant;
 
-public class ConstatnsCoveringMagicNumber {
+public class ConstantsCoveringMagicNumber {
     public static final String INITIAL_JUDGEMENT_VALUE = "";
 
     public static final int INITIAL_VALUE = 0;
