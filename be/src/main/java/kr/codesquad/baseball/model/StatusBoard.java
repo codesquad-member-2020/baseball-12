@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.List;
 
 import static kr.codesquad.baseball.commonconstant.Judgement.*;
+import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -65,10 +66,14 @@ public class StatusBoard {
     }
 
     public String createJudgement(double battingAverage) {
-        double seed = Math.random();
-        if (seed < 0.1) { judgement = OUT; }
-        else if (seed < (1 - battingAverage) / 2 - 0.05) { judgement = STRIKE; }
-        else if (seed < ((1 - battingAverage) / 2 - 0.05) * 2) { judgement = BALL; }
+        double seedOfJudgement = Math.random();
+        final boolean FORMULA_GENERATING_JUDGEMENT_OF_OUT = seedOfJudgement < 0.1;
+        final boolean FORMULA_GENERATING_JUDGEMENT_OF_STRIKE = seedOfJudgement < (1 - battingAverage) / 2 - 0.05;
+        final boolean FORMULA_GENERATING_JUDGEMENT_OF_BALL = seedOfJudgement < ((1 - battingAverage) / 2 - 0.05) * 2;
+
+        if (FORMULA_GENERATING_JUDGEMENT_OF_OUT) { judgement = OUT; }
+        else if (FORMULA_GENERATING_JUDGEMENT_OF_STRIKE) { judgement = STRIKE; }
+        else if (FORMULA_GENERATING_JUDGEMENT_OF_BALL) { judgement = BALL; }
         else { judgement = HIT; }
         return judgement;
     }
@@ -76,51 +81,51 @@ public class StatusBoard {
     public void updateStatus(String judgement) {
         switch (judgement) {
         case STRIKE:
-            strike += 1;
+            strike += ONE_POINT;
             arrangeSideEffectOfStatus(STRIKE);
             break;
         case BALL:
-            ball += 1;
+            ball += ONE_POINT;
             arrangeSideEffectOfStatus(BALL);
             break;
         case HIT:
-            strike = 0;
-            ball = 0;
-            hit += 1;
-            addedHitCount += 1;
-            currentBattingOrder += 1;
+            strike = INITIAL_VALUE;
+            ball = INITIAL_VALUE;
+            hit += ONE_POINT;
+            addedHitCount += ONE_POINT;
+            currentBattingOrder += ONE_POINT;
             arrangeSideEffectOfStatus(HIT);
             break;
         case OUT:
-            strike = 0;
-            ball = 0;
-            out += 1;
-            currentBattingOrder += 1;
+            strike = INITIAL_VALUE;
+            ball = INITIAL_VALUE;
+            out += ONE_POINT;
+            currentBattingOrder += ONE_POINT;
             arrangeSideEffectOfStatus(OUT);
             break;
         }
     }
 
     public void arrangeSideEffectOfStatus(String judgement) {
-        if (ball == 4) {
-            ball = 0;
-            hit += 1;
-            addedHitCount += 1;
-            currentBattingOrder += 1;
+        if (ball == FOUR_BALL) {
+            ball = INITIAL_VALUE;
+            hit += ONE_POINT;
+            addedHitCount += ONE_POINT;
+            currentBattingOrder += ONE_POINT;
             judgement = HIT;
             this.judgement = HIT;
         }
 
-        if (judgement.equals(HIT) && hit > 3) score += 1;
+        if (judgement.equals(HIT) && hit > THREE_HIT) score += ONE_POINT;
 
-        if (strike == 3) {
-            strike = 0;
-            ball = 0;
-            out += 1;
-            currentBattingOrder += 1;
+        if (strike == THREE_STRIKE) {
+            strike = INITIAL_VALUE;
+            ball = INITIAL_VALUE;
+            out += ONE_POINT;
+            currentBattingOrder += ONE_POINT;
             this.judgement = OUT;
         }
 
-        if (currentBattingOrder > 9) currentBattingOrder = 1;
+        if (currentBattingOrder > LAST_BATTING_ORDER) currentBattingOrder = FIRST_BATTING_ORDER;
     }
 }

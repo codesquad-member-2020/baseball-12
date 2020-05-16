@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static kr.codesquad.baseball.commonconstant.Judgement.OUT;
+import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
 
 @Service
 public class PlayerService {
@@ -62,8 +62,6 @@ public class PlayerService {
     }
 
     public StatusBoard findRecentStatusOfInningByGameId(int gameId, int inning) {
-        final String INITIAL_JUDGEMENT_VALUE = "";
-        final int INITIAL_VALUE = 0;
         return Optional.ofNullable(playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning))
                        .orElse(StatusBoard.builder()
                                           .judgement(INITIAL_JUDGEMENT_VALUE)
@@ -84,8 +82,6 @@ public class PlayerService {
     }
 
     public void updatePlayerRecordsForChange(StatusBoard statusBoard, Game game) {
-        final String INITIAL_JUDGEMENT_VALUE = "";
-        final int INITIAL_VALUE = 0;
 //        String initializedJudgement = "";
 //        int initializedStrike = 0; int initializedBall = 0;
 //        int initializedHit = 0;    int initializedOut = 0;

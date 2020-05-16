@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
+
 @Service
 public class TeamService {
 
@@ -80,7 +82,6 @@ public class TeamService {
     }
 
     public void updateTeamRecordToChangeOffense(StatusBoard statusBoard, Game game) {
-        final int FIRST_INNING = 1;
         int currentBattingOrder;
         int currentInning = statusBoard.getInning();
         playerService.updatePlayerRecordsForChange(statusBoard, game);
@@ -92,7 +93,6 @@ public class TeamService {
     }
 
     public void updateTeamRecordToChangeInning(StatusBoard statusBoard, Game game) {
-        final int ONE_INNING = 1;
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
         teamDao.updateCurrentGameInformation(statusBoard.getInning() + ONE_INNING, !game.isFirsthalf(), game.getId());
         initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + ONE_INNING);
@@ -116,8 +116,6 @@ public class TeamService {
     }
 
     public LiveScoreOfTeamWithPlayers findPlayerLiveScoreByTeamId(int gameId, int teamId) {
-        final int NEVER_APPEARED = 0;
-        final int ZERO_POINT = 0;
         Team team = findTeamById(teamId);
         List<Integer> playerIds = playerService.findPlayerIdsByTeamId(teamId);
         List<BatterLiveScoreVO> playerRecords = playerIds.stream().map(playerId -> {
@@ -138,7 +136,6 @@ public class TeamService {
                                     .outCount(totalOutCountOfBatterInGame)
                                     .build();
         }).collect(Collectors.toList());
-        final int INITIAL_VALUE = 0;
         int totalPlateAppearanceOfTeam = playerRecords.stream()
                                         .map(batter -> batter.getPlateAppearance())
                                         .reduce(INITIAL_VALUE, (totalPlateAppearance, plateAppearance) -> totalPlateAppearance += plateAppearance);

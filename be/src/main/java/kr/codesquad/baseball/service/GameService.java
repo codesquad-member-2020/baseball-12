@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static kr.codesquad.baseball.commonconstant.ConstatnsCoveringMagicNumber.*;
+
 @Service
 public class GameService {
 
@@ -128,7 +130,6 @@ public class GameService {
     }
 
     public void updateStatusAfterPitch(StatusBoard statusBoard, Game game) {
-        final int THREE_OUT = 3;
         playerService.updatePlayerRecords(statusBoard, game);
         if (statusBoard.getOut() == THREE_OUT && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
         else if (statusBoard.getOut() == THREE_OUT && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
