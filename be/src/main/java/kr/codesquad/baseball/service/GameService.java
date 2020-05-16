@@ -128,9 +128,10 @@ public class GameService {
     }
 
     public void updateStatusAfterPitch(StatusBoard statusBoard, Game game) {
+        final int THREE_OUT = 3;
         playerService.updatePlayerRecords(statusBoard, game);
-        if (statusBoard.getOut() == 3 && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
-        else if (statusBoard.getOut() == 3 && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
+        if (statusBoard.getOut() == THREE_OUT && statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeOffense(statusBoard, game); }
+        else if (statusBoard.getOut() == THREE_OUT && !statusBoard.isFirsthalf()) { teamService.updateTeamRecordToChangeInning(statusBoard, game); }
         else { teamService.updateTeamRecordOfCurrentInning(statusBoard, game); }
     }
 

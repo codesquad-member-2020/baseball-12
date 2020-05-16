@@ -80,22 +80,24 @@ public class TeamService {
     }
 
     public void updateTeamRecordToChangeOffense(StatusBoard statusBoard, Game game) {
+        final int FIRST_INNING = 1;
         int currentBattingOrder;
         int currentInning = statusBoard.getInning();
         playerService.updatePlayerRecordsForChange(statusBoard, game);
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
         teamDao.updateCurrentGameInformation(currentInning, !game.isFirsthalf(), game.getId());
-        if (currentInning > 1) { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1); }
+        if (currentInning > FIRST_INNING) { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning - 1); }
         else { currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), currentInning); }
         teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getHomeTeam(), statusBoard.getInning(), currentBattingOrder);
     }
 
     public void updateTeamRecordToChangeInning(StatusBoard statusBoard, Game game) {
+        final int ONE_INNING = 1;
         teamDao.updateTeamRecordOfCurrentInning(statusBoard, game);
-        teamDao.updateCurrentGameInformation(statusBoard.getInning() + 1, !game.isFirsthalf(), game.getId());
-        initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + 1);
+        teamDao.updateCurrentGameInformation(statusBoard.getInning() + ONE_INNING, !game.isFirsthalf(), game.getId());
+        initializeTeamRecordOfInning(game.getId(), game.getAwayTeam(), game.getHomeTeam(), game.getInning() + ONE_INNING);
         int currentBattingOrder = teamDao.findCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning());
-        teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning() + 1, currentBattingOrder);
+        teamDao.updateCurrentBattingOrderOfInning(game.getId(), game.getAwayTeam(), statusBoard.getInning() + ONE_INNING, currentBattingOrder);
     }
 
     public Team findTeamById(int teamId) {
@@ -114,6 +116,8 @@ public class TeamService {
     }
 
     public LiveScoreOfTeamWithPlayers findPlayerLiveScoreByTeamId(int gameId, int teamId) {
+        final int NEVER_APPEARED = 0;
+        final int ZERO_POINT = 0;
         Team team = findTeamById(teamId);
         List<Integer> playerIds = playerService.findPlayerIdsByTeamId(teamId);
         List<BatterLiveScoreVO> playerRecords = playerIds.stream().map(playerId -> {
@@ -121,7 +125,7 @@ public class TeamService {
             double totalHitCountOfBatterInGame = batter.getHitCount();
             double totalPlateAppearanceOfBatterInGame = batter.getPlateAppearance();
             double battingAverageOfBatterInGame;
-            if (totalPlateAppearanceOfBatterInGame == 0) { battingAverageOfBatterInGame = 0; }
+            if (totalPlateAppearanceOfBatterInGame == NEVER_APPEARED) { battingAverageOfBatterInGame = ZERO_POINT; }
             else { battingAverageOfBatterInGame = totalHitCountOfBatterInGame / totalPlateAppearanceOfBatterInGame; }
             int totalOutCountOfBatterInGame = playerService.findTotalJudgementCountOfPlayerInGameByIds(gameId, playerId, Judgement.OUT);
             return BatterLiveScoreVO.builder()
@@ -134,15 +138,16 @@ public class TeamService {
                                     .outCount(totalOutCountOfBatterInGame)
                                     .build();
         }).collect(Collectors.toList());
+        final int INITIAL_VALUE = 0;
         int totalPlateAppearanceOfTeam = playerRecords.stream()
                                         .map(batter -> batter.getPlateAppearance())
-                                        .reduce(0, (totalPlateAppearance, plateAppearance) -> totalPlateAppearance += plateAppearance);
+                                        .reduce(INITIAL_VALUE, (totalPlateAppearance, plateAppearance) -> totalPlateAppearance += plateAppearance);
         int totalHitCountOfTeam = playerRecords.stream()
                                         .map(batter -> batter.getHitCount())
-                                        .reduce(0, (totalHitCount, hitCount) -> totalHitCount += hitCount);
+                                        .reduce(INITIAL_VALUE, (totalHitCount, hitCount) -> totalHitCount += hitCount);
         int totalOutCountOfTeam = playerRecords.stream()
                                         .map(batter -> batter.getOutCount())
-                                        .reduce(0, (totalOutCount, outCount) -> totalOutCount += outCount);
+                                        .reduce(INITIAL_VALUE, (totalOutCount, outCount) -> totalOutCount += outCount);
         return LiveScoreOfTeamWithPlayers.playerLiveScoreBuilder()
                                          .teamId(team.getId())
                                          .teamName(team.getName())

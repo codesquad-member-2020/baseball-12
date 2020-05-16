@@ -62,14 +62,16 @@ public class PlayerService {
     }
 
     public StatusBoard findRecentStatusOfInningByGameId(int gameId, int inning) {
+        final String INITIAL_JUDGEMENT_VALUE = "";
+        final int INITIAL_VALUE = 0;
         return Optional.ofNullable(playerDao.findRecentPlayerRecordOfInningByGameId(gameId, inning))
                        .orElse(StatusBoard.builder()
-                                          .judgement("")
+                                          .judgement(INITIAL_JUDGEMENT_VALUE)
                                           .inning(inning)
-                                          .strike(0)
-                                          .ball(0)
-                                          .hit(0)
-                                          .out(0)
+                                          .strike(INITIAL_VALUE)
+                                          .ball(INITIAL_VALUE)
+                                          .hit(INITIAL_VALUE)
+                                          .out(INITIAL_VALUE)
                                           .build());
     }
 
@@ -82,11 +84,13 @@ public class PlayerService {
     }
 
     public void updatePlayerRecordsForChange(StatusBoard statusBoard, Game game) {
-        String initializedJudgement = "";
-        int initializedStrike = 0; int initializedBall = 0;
-        int initializedHit = 0;    int initializedOut = 0;
+        final String INITIAL_JUDGEMENT_VALUE = "";
+        final int INITIAL_VALUE = 0;
+//        String initializedJudgement = "";
+//        int initializedStrike = 0; int initializedBall = 0;
+//        int initializedHit = 0;    int initializedOut = 0;
         playerDao.insertBattingRecord(statusBoard.getBatterId(), statusBoard.getInning(),
-                                      initializedJudgement, initializedStrike, initializedBall, initializedHit, initializedOut, game.getId());
+                                      INITIAL_JUDGEMENT_VALUE, INITIAL_VALUE, INITIAL_VALUE, INITIAL_VALUE, INITIAL_VALUE, game.getId());
     }
 
     public double findBattingAverage(int teamId, int currentBattingOrder) {
